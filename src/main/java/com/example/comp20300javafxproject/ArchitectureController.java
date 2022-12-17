@@ -13,77 +13,87 @@ import javafx.scene.shape.Circle;
 import java.io.*;
 import java.util.ArrayList;
 
+import static com.example.comp20300javafxproject.Game.NOT_READY;
+import static com.example.comp20300javafxproject.Game.PLAYERONE_DICE;
+import static com.example.comp20300javafxproject.Game.PLAYERONE_MOVE;
+import static com.example.comp20300javafxproject.Game.PLAYERONE_CHOOSING;
+import static com.example.comp20300javafxproject.Game.PLAYERTWO_DICE;
+import static com.example.comp20300javafxproject.Game.PLAYERTWO_MOVE;
+import static com.example.comp20300javafxproject.Game.PLAYERTWO_CHOOSING;
+import static com.example.comp20300javafxproject.Game.SOMEONE_WON;
+
+
 /**
  * The Controller of JavaFx Project
  */
 public class ArchitectureController {
-    /**
-     * An unready state means that the previous game has just ended or the game has not yet started.
-     */
-    static final int NOT_READY = 0;
-    /**
-     * This state means that player one should throw the dice to decide the direction of movement at this time
-     */
-    static final int PLAYERONE_DICE = 1;
-    /**
-     * This state means that player one should throw the dice to determine the number of squares to move at this time
-     */
-    static final int PLAYERONE_MOVE = 2;
-    /**
-     * This state means that at this time the player one is blocked by other obstacles
-     * and should choose to move left/move right/skip the turn.
-     * <p>
-     * Obstacles include: other players, board edges, fire, tar pits, fences
-     */
-    static final int PLAYERONE_CHOOSING = 3;
-    /**
-     * This state means that player two should throw the dice to decide the direction of movement at this time
-     */
-    static final int PLAYERTWO_DICE = 4;
-    /**
-     * This state means that player two should throw the dice to determine the number of squares to move at this time
-     */
-    static final int PLAYERTWO_MOVE = 5;
-    /**
-     * This state means that at this time the player two is blocked by other obstacles
-     * and should choose to move left/move right/skip the turn.
-     * <p>
-     * Obstacles include: other players, board edges, fire, tar pits, fences
-     */
-    static final int PLAYERTWO_CHOOSING = 6;
-    /**
-     * This status means that one of players has won
-     */
-    static final int SOMEONE_WON = 7;
-    /**
-     * Game state
-     */
-    private int state = NOT_READY;
-    /**
-     * True represents player one being stuck in the tar pit. Player one will miss the next turn.
-     */
-    private boolean playerOneStuck = false;
-    /**
-     * True represents player two being stuck in the tar pit. Player two will miss the next turn.
-     */
-    private boolean playerTwoStuck = false;
+//    /**
+//     * An unready state means that the previous game has just ended or the game has not yet started.
+//     */
+//    static final int NOT_READY = 0;
+//    /**
+//     * This state means that player one should throw the dice to decide the direction of movement at this time
+//     */
+//    static final int PLAYERONE_DICE = 1;
+//    /**
+//     * This state means that player one should throw the dice to determine the number of squares to move at this time
+//     */
+//    static final int PLAYERONE_MOVE = 2;
+//    /**
+//     * This state means that at this time the player one is blocked by other obstacles
+//     * and should choose to move left/move right/skip the turn.
+//     * <p>
+//     * Obstacles include: other players, board edges, fire, tar pits, fences
+//     */
+//    static final int PLAYERONE_CHOOSING = 3;
+//    /**
+//     * This state means that player two should throw the dice to decide the direction of movement at this time
+//     */
+//    static final int PLAYERTWO_DICE = 4;
+//    /**
+//     * This state means that player two should throw the dice to determine the number of squares to move at this time
+//     */
+//    static final int PLAYERTWO_MOVE = 5;
+//    /**
+//     * This state means that at this time the player two is blocked by other obstacles
+//     * and should choose to move left/move right/skip the turn.
+//     * <p>
+//     * Obstacles include: other players, board edges, fire, tar pits, fences
+//     */
+//    static final int PLAYERTWO_CHOOSING = 6;
+//    /**
+//     * This status means that one of players has won
+//     */
+//    static final int SOMEONE_WON = 7;
+//    /**
+//     * Game state
+//     */
+//    private int state = NOT_READY;
+//    /**
+//     * True represents player one being stuck in the tar pit. Player one will miss the next turn.
+//     */
+//    private boolean playerOneStuck = false;
+//    /**
+//     * True represents player two being stuck in the tar pit. Player two will miss the next turn.
+//     */
+//    private boolean playerTwoStuck = false;
 
-    /**
-     * A dice that determines the direction of player one's movement
-     */
-    private DirDice dirDiceOne;
-    /**
-     * A dice that determines the direction of player two's movement
-     */
-    private DirDice dirDiceTwo;
-    /**
-     * A dice that determines the number of squares moved by player one
-     */
-    private MoveDice moveDiceOne;
-    /**
-     * A dice that determines the number of squares moved by player two
-     */
-    private MoveDice moveDiceTwo;
+//    /**
+//     * A dice that determines the direction of player one's movement
+//     */
+//    private DirDice dirDiceOne;
+//    /**
+//     * A dice that determines the direction of player two's movement
+//     */
+//    private DirDice dirDiceTwo;
+//    /**
+//     * A dice that determines the number of squares moved by player one
+//     */
+//    private MoveDice moveDiceOne;
+//    /**
+//     * A dice that determines the number of squares moved by player two
+//     */
+//    private MoveDice moveDiceTwo;
 
     private Game game;
 //    /**
@@ -734,26 +744,38 @@ public class ArchitectureController {
      */
     @FXML
     void playerOneDir(ActionEvent event) {
-        if(state == PLAYERONE_DICE){
-            dirDiceOne.roll();
-            if(dirDiceOne.dir != Direction.miss){
-                playerOneDirInfo.setText(playerOneNameText.getText() + " should go " + dirDiceOne.dir);
-                state = PLAYERONE_MOVE;
-            }
-            else{
-                if(playerTwoStuck){
-                    state = PLAYERONE_DICE;
-                    playerTwoStuck = false;
-                    setPlayerTurn(playerOne);
-                }
-                else{
-                    playerOneDirInfo.setText(playerOneNameText.getText() + " skips this turn");
-                    playerOneMoveInfo.setText("do not move");
-                    state = PLAYERTWO_DICE;
-                    setPlayerTurn(playerTwo);
-                }
-            }
+        game.playerOneDir();
+
+        if(game.state == PLAYERONE_MOVE)
+            playerOneDirInfo.setText(playerOneNameText.getText() + " should go " + game.dirDiceOne.dir);
+        else if(game.state == PLAYERONE_DICE)
+            setPlayerTurn(playerOne);
+        else if(game.state == PLAYERTWO_DICE){
+            playerOneDirInfo.setText(playerOneNameText.getText() + " skips this turn");
+            playerOneMoveInfo.setText("do not move");
+            setPlayerTurn(playerTwo);
         }
+
+//        if(state == PLAYERONE_DICE){
+//            dirDiceOne.roll();
+//            if(dirDiceOne.dir != Direction.miss){
+//                playerOneDirInfo.setText(playerOneNameText.getText() + " should go " + dirDiceOne.dir);
+//                state = PLAYERONE_MOVE;
+//            }
+//            else{
+//                if(playerTwoStuck){
+//                    state = PLAYERONE_DICE;
+//                    playerTwoStuck = false;
+//                    setPlayerTurn(playerOne);
+//                }
+//                else{
+//                    playerOneDirInfo.setText(playerOneNameText.getText() + " skips this turn");
+//                    playerOneMoveInfo.setText("do not move");
+//                    state = PLAYERTWO_DICE;
+//                    setPlayerTurn(playerTwo);
+//                }
+//            }
+//        }
     }
 
     /**
