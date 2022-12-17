@@ -44,6 +44,10 @@ public class Gamer implements Serializable, Comparable<Gamer> {
         this.allMoves = Integer.toString(this.moves);
     }
 
+    public void increaseMoves(){
+        this.moves++;
+    }
+
     /**
      * For comparing multiple players in an ArrayList, the player with more wins will have a smaller index
      * <p>

@@ -84,14 +84,16 @@ public class ArchitectureController {
      * A dice that determines the number of squares moved by player two
      */
     private MoveDice moveDiceTwo;
-    /**
-     * Number of squares moved by player one
-     */
-    private int playerOneMoves;
-    /**
-     * Number of squares moved by player two
-     */
-    private int playerTwoMoves;
+
+    private Game game;
+//    /**
+//     * Number of squares moved by player one
+//     */
+//    private int playerOneMoves;
+//    /**
+//     * Number of squares moved by player two
+//     */
+//    private int playerTwoMoves;
     /**
      * The winner of this round of game (Enter two names to start a new game is a new round)
      */
@@ -396,12 +398,14 @@ public class ArchitectureController {
         this.dirDiceTwo = new DirDice();
         this.moveDiceOne = new MoveDice();
         this.moveDiceTwo = new MoveDice();
-        this.playerOneMoves = 0;
-        this.playerTwoMoves = 0;
+//        this.playerOneMoves = 0;
+//        this.playerTwoMoves = 0;
         this.winner = new Gamer();
         this.tenApexGamersName = new ArrayList<>();
         this.tenApexGamersWins = new ArrayList<>();
         this.tenApexGamersMoves = new ArrayList<>();
+
+        this.game = new Game();
     }
 
     /**
@@ -508,12 +512,14 @@ public class ArchitectureController {
      */
     public void updatePlayerMoves(Circle player){
         if(player.equals(playerOne)){
-            this.playerOneMoves++;
-            playerOneMoveRecordNums.setText(Integer.toString(this.playerOneMoves));
+            //this.playerOneMoves++;
+            game.gamer1.increaseMoves();
+            playerOneMoveRecordNums.setText(Integer.toString(this.game.gamer1.moves));
         }
         else {
-            this.playerTwoMoves++;
-            playerTwoMoveRecordNums.setText(Integer.toString(this.playerTwoMoves));
+            //this.playerTwoMoves++;
+            game.gamer2.increaseMoves();
+            playerTwoMoveRecordNums.setText(Integer.toString(this.game.gamer2.moves));
         }
     }
 
@@ -777,7 +783,7 @@ public class ArchitectureController {
             move(playerOne, dirDiceOne, moveDiceOne);
             if(state == SOMEONE_WON){
                 lastGameWinnerInfo.setText(playerOneNameText.getText() + " won, moved " +
-                        this.playerOneMoves + " squares.");
+                        this.game.gamer1.moves + " squares.");
                 doPersistentRecord(playerOne);
                 showNewWholeRecords();
                 initAfterFinish();
@@ -941,7 +947,7 @@ public class ArchitectureController {
             move(playerTwo, dirDiceTwo, moveDiceTwo);
             if(state == SOMEONE_WON){
                 lastGameWinnerInfo.setText(playerTwoNameText.getText() + " won, moved " +
-                        this.playerTwoMoves + " squares.");
+                        this.game.gamer2.moves + " squares.");
                 doPersistentRecord(playerTwo);
                 showNewWholeRecords();
                 initAfterFinish();
@@ -1061,8 +1067,9 @@ public class ArchitectureController {
             playerTwoChoice.setText("<None>");
             playerOneMoveRecord.setText(playerOneNameInput.getText() + " moves:");
             playerTwoMoveRecord.setText(playerTwoNameInput.getText() + " moves:");
-            this.playerOneMoves = 0;
-            this.playerTwoMoves = 0;
+//            this.playerOneMoves = 0;
+//            this.playerTwoMoves = 0;
+            game = new Game(); // 如果只是moves和wins需要重置，可以这样，如果有下次游戏不会重置的内容，就要改一下
             lastGameWinnerInfo.setText("");
             playerOne.setLayoutX(100);
             playerOne.setLayoutY(675);
@@ -1159,7 +1166,7 @@ public class ArchitectureController {
      */
     public void doPersistentRecord(Circle player){
         String name = player.equals(playerOne) ? playerOneNameText.getText() : playerTwoNameText.getText();
-        int moves = player.equals(playerOne) ? this.playerOneMoves : this.playerTwoMoves;
+        int moves = player.equals(playerOne) ? this.game.gamer1.moves : this.game.gamer2.moves;
         winner.setName(name);
         winner.setNumWins(1);
         winner.setMoves(moves);
