@@ -35,6 +35,7 @@ class GameTest {
     void test1(){
         Game game = new Game();
         game.state = PLAYERONE_MOVE;
+        game.dirDiceOne.dir = Direction.forward;
         game.playerOneMoveFirstly();
         game.moveDiceOne.move = 2;
         int idealMoves = game.moveDiceOne.move;
@@ -50,6 +51,7 @@ class GameTest {
     void test2(){
         Game game = new Game();
         game.state = PLAYERTWO_MOVE;
+        game.dirDiceTwo.dir = Direction.forward;
         game.playerTwoMoveFirstly();
         game.moveDiceTwo.move = 3;
         int idealMoves = game.moveDiceTwo.move;
@@ -58,6 +60,302 @@ class GameTest {
         }
         assertEquals(3, game.gamer2.moves);
         assertEquals(450, game.gamer2.layoutY);
+    }
+
+    @Test
+    @DisplayName("player 1 meets fire")
+    void test3(){
+        Game game = new Game();
+        game.state = PLAYERONE_MOVE;
+        game.dirDiceOne.dir = Direction.forward;
+        game.playerOneMoveFirstly();
+        game.moveDiceOne.move = 3;
+        int idealMoves = game.moveDiceOne.move;
+        for(int i = 0; i < idealMoves; i++){
+            game.move(game.gamer1, game.dirDiceOne, game.moveDiceOne);
+        }
+        assertEquals(2, game.gamer1.moves);
+        assertEquals(PLAYERONE_CHOOSING, game.state);
+        assertEquals(525, game.gamer1.layoutY);
+    }
+    @Test
+    @DisplayName("player 1 meets fire and move right")
+    void test4(){
+        Game game = new Game();
+        game.state = PLAYERONE_MOVE;
+        game.dirDiceOne.dir = Direction.forward;
+        game.playerOneMoveFirstly();
+        game.moveDiceOne.move = 3;
+        int idealMoves = game.moveDiceOne.move;
+        for(int i = 0; i < idealMoves; i++){
+            game.move(game.gamer1, game.dirDiceOne, game.moveDiceOne);
+        }
+        assertEquals(PLAYERONE_CHOOSING, game.state);
+
+        assertEquals(1, game.moveDiceOne.move);
+        for(int i = 0; i < game.moveDiceOne.move; i++){
+            game.moveLeftOrRight(game.gamer1, game.dirDiceOne, game.moveDiceOne, 1);
+        }
+        assertEquals(3, game.gamer1.moves);
+        assertEquals(525, game.gamer1.layoutY);
+        assertEquals(300, game.gamer1.layoutX);
+    }
+
+    @Test
+    @DisplayName("player 1 meets fire and move left") // The left side is the left edge of board
+    void test5(){
+        Game game = new Game();
+        game.state = PLAYERONE_MOVE;
+        game.dirDiceOne.dir = Direction.forward;
+        game.playerOneMoveFirstly();
+        game.moveDiceOne.move = 3;
+        int idealMoves = game.moveDiceOne.move;
+        for(int i = 0; i < idealMoves; i++){
+            game.move(game.gamer1, game.dirDiceOne, game.moveDiceOne);
+        }
+        assertEquals(PLAYERONE_CHOOSING, game.state);
+
+        for(int i = 0; i < game.moveDiceOne.move; i++){
+            game.moveLeftOrRight(game.gamer1, game.dirDiceOne, game.moveDiceOne, -1); // -1 means moving left
+        }
+        assertEquals(2, game.gamer1.moves);
+        assertEquals(525, game.gamer1.layoutY);
+        assertEquals(100, game.gamer1.layoutX);
+    }
+
+    @Test
+    @DisplayName("player 1 meets fire and then choose to miss this turn")
+    void test6(){
+        Game game = new Game();
+        game.state = PLAYERONE_MOVE;
+        game.dirDiceOne.dir = Direction.forward;
+        game.playerOneMoveFirstly();
+        game.moveDiceOne.move = 3;
+        int idealMoves = game.moveDiceOne.move;
+        for(int i = 0; i < idealMoves; i++){
+            game.move(game.gamer1, game.dirDiceOne, game.moveDiceOne);
+        }
+        assertEquals(PLAYERONE_CHOOSING, game.state);
+        game.state = PLAYERTWO_DICE;
+
+        assertEquals(2, game.gamer1.moves);
+        assertEquals(525, game.gamer1.layoutY);
+        assertEquals(100, game.gamer1.layoutX);
+    }
+
+    @Test
+    @DisplayName("player 2 meets fire")
+    void test7(){
+        Game game = new Game();
+        game.state = PLAYERTWO_MOVE;
+        game.dirDiceTwo.dir = Direction.forward;
+        game.playerTwoMoveFirstly();
+        game.moveDiceTwo.move = 4;
+        int idealMoves = game.moveDiceTwo.move;
+        for(int i = 0; i < idealMoves; i++){
+            game.move(game.gamer2, game.dirDiceTwo, game.moveDiceTwo);
+        }
+        assertEquals(3, game.gamer2.moves);
+        assertEquals(PLAYERTWO_CHOOSING, game.state);
+        assertEquals(450, game.gamer2.layoutY);
+    }
+
+    @Test
+    @DisplayName("player 2 meets fire and move left")
+    void test8(){
+        Game game = new Game();
+        game.state = PLAYERTWO_MOVE;
+        game.dirDiceTwo.dir = Direction.forward;
+        game.playerTwoMoveFirstly();
+        game.moveDiceTwo.move = 4;
+        int idealMoves = game.moveDiceTwo.move;
+        for(int i = 0; i < idealMoves; i++){
+            game.move(game.gamer2, game.dirDiceTwo, game.moveDiceTwo);
+        }
+        assertEquals(PLAYERTWO_CHOOSING, game.state);
+
+        assertEquals(1, game.moveDiceTwo.move);
+        for(int i = 0; i < game.moveDiceTwo.move; i++){
+            game.moveLeftOrRight(game.gamer2, game.dirDiceTwo, game.moveDiceTwo, -1);
+        }
+        assertEquals(4, game.gamer2.moves);
+        assertEquals(450, game.gamer2.layoutY);
+        assertEquals(500, game.gamer2.layoutX);
+    }
+
+    @Test
+    @DisplayName("player 2 meets fire and move right") // The right side is the right edge of board
+    void test9(){
+        Game game = new Game();
+        game.state = PLAYERTWO_MOVE;
+        game.dirDiceTwo.dir = Direction.forward;
+        game.playerTwoMoveFirstly();
+        game.moveDiceTwo.move = 4;
+        int idealMoves = game.moveDiceTwo.move;
+        for(int i = 0; i < idealMoves; i++){
+            game.move(game.gamer2, game.dirDiceTwo, game.moveDiceTwo);
+        }
+        assertEquals(PLAYERTWO_CHOOSING, game.state);
+
+        assertEquals(1, game.moveDiceTwo.move);
+        for(int i = 0; i < game.moveDiceTwo.move; i++){
+            game.moveLeftOrRight(game.gamer2, game.dirDiceTwo, game.moveDiceTwo, 1);
+        }
+        assertEquals(3, game.gamer2.moves);
+        assertEquals(450, game.gamer2.layoutY);
+        assertEquals(700, game.gamer2.layoutX);
+    }
+
+    @Test
+    @DisplayName("player 2 meets fire and then choose to miss this turn")
+    void test10(){
+        Game game = new Game();
+        game.state = PLAYERTWO_MOVE;
+        game.dirDiceTwo.dir = Direction.forward;
+        game.playerTwoMoveFirstly();
+        game.moveDiceTwo.move = 4;
+        int idealMoves = game.moveDiceTwo.move;
+        for(int i = 0; i < idealMoves; i++){
+            game.move(game.gamer2, game.dirDiceTwo, game.moveDiceTwo);
+        }
+        assertEquals(PLAYERTWO_CHOOSING, game.state);
+
+        assertEquals(3, game.gamer2.moves);
+        assertEquals(450, game.gamer2.layoutY);
+        assertEquals(700, game.gamer2.layoutX);
+    }
+
+    @Test
+    @DisplayName("player 1 meets tar pit")
+    void test11(){
+        Game game = new Game();
+        game.state = PLAYERONE_MOVE;
+        game.dirDiceOne.dir = Direction.forward;
+        game.playerOneMoveFirstly();
+        game.moveDiceOne.move = 1;
+        game.gamer1.layoutX = 500;
+        game.gamer1.layoutY = 375;
+        game.move(game.gamer1, game.dirDiceOne, game.moveDiceOne);
+        game.playerOneMoveSecondly();
+        assertEquals(1, game.gamer1.moves);
+        assertTrue(game.playerOneStuck);
+        assertEquals(PLAYERTWO_DICE, game.state);
+
+        game.dirDiceTwo.dir = Direction.forward;
+        game.playerTwoMoveFirstly();
+        game.moveDiceTwo.move = 1;
+        game.move(game.gamer2, game.dirDiceTwo, game.moveDiceTwo);
+        game.playerTwoMoveSecondly();
+        assertEquals(PLAYERTWO_DICE, game.state);
+        assertFalse(game.playerOneStuck);
+    }
+
+    @Test
+    @DisplayName("player 2 meets tar pit")
+    void test12(){
+        Game game = new Game();
+        game.state = PLAYERTWO_MOVE;
+        game.dirDiceTwo.dir = Direction.forward;
+        game.playerTwoMoveFirstly();
+        game.moveDiceTwo.move = 1;
+        game.gamer2.layoutX = 100;
+        game.gamer2.layoutY = 300;
+        game.move(game.gamer2, game.dirDiceTwo, game.moveDiceTwo);
+        game.playerTwoMoveSecondly();
+        assertEquals(1, game.gamer2.moves);
+        assertTrue(game.playerTwoStuck);
+        assertEquals(PLAYERONE_DICE, game.state);
+
+        game.dirDiceOne.dir = Direction.forward;
+        game.playerOneMoveFirstly();
+        game.moveDiceOne.move = 1;
+        game.move(game.gamer1, game.dirDiceOne, game.moveDiceOne);
+        game.playerOneMoveSecondly();
+        assertEquals(PLAYERONE_DICE, game.state);
+        assertFalse(game.playerTwoStuck);
+    }
+
+    @Test
+    @DisplayName("player 1 meets player 2")
+    void test13(){
+        Game game = new Game();
+        game.moveDiceOne.move = 3;
+        game.state = PLAYERONE_CHOOSING;
+        for(int i = 0; i < game.moveDiceOne.move; i++){
+            if(!game.moveLeftOrRight(game.gamer1, game.dirDiceOne, game.moveDiceOne, 1))
+                break;
+        }
+        assertEquals(2, game.gamer1.moves);
+        assertEquals(500, game.gamer1.layoutX);
+        assertEquals(675, game.gamer1.layoutY);
+    }
+    @Test
+    @DisplayName("player 2 meets player 1")
+    void test14(){
+        Game game = new Game();
+        game.moveDiceTwo.move = 3;
+        game.state = PLAYERTWO_CHOOSING;
+        for(int i = 0; i < game.moveDiceTwo.move; i++){
+            if(!game.moveLeftOrRight(game.gamer2, game.dirDiceTwo, game.moveDiceTwo, -1))
+                break;
+        }
+        assertEquals(2, game.gamer2.moves);
+        assertEquals(300, game.gamer2.layoutX);
+        assertEquals(675, game.gamer2.layoutY);
+    }
+
+    @Test
+    @DisplayName("player 1 meets the edge of board")
+    void test15(){
+        Game game = new Game();
+        game.state = PLAYERONE_MOVE;
+        game.dirDiceOne.dir = Direction.backward;
+        game.playerOneMoveFirstly();
+        game.moveDiceOne.move = 2;
+        int idealMoves = game.moveDiceOne.move;
+        for(int i = 0; i < idealMoves; i++){
+            game.move(game.gamer1, game.dirDiceOne, game.moveDiceOne);
+            if(game.state == PLAYERONE_CHOOSING)
+                break;
+        }
+        assertEquals(0, game.gamer1.moves);
+        assertEquals(PLAYERONE_CHOOSING, game.state);
+        assertEquals(2, game.moveDiceOne.move);
+        game.playerOneMoveSecondly();
+
+        for(int i = 0; i < game.moveDiceOne.move; i++){
+            game.moveLeftOrRight(game.gamer1, game.dirDiceOne, game.moveDiceOne, 1);
+        }
+        assertEquals(2, game.gamer1.moves);
+        assertEquals(675, game.gamer1.layoutY);
+        assertEquals(500, game.gamer1.layoutX);
+    }
+
+    @Test
+    @DisplayName("player 2 meets the edge of board")
+    void test16(){
+        Game game = new Game();
+        game.state = PLAYERTWO_MOVE;
+        game.dirDiceTwo.dir = Direction.backward;
+        game.playerTwoMoveFirstly();
+        game.moveDiceTwo.move = 2;
+        int idealMoves = game.moveDiceTwo.move;
+        for(int i = 0; i < idealMoves; i++){
+            game.move(game.gamer2, game.dirDiceTwo, game.moveDiceTwo);
+            if(game.state == PLAYERTWO_CHOOSING)
+                break;
+        }
+        assertEquals(0, game.gamer2.moves);
+        assertEquals(PLAYERTWO_CHOOSING, game.state);
+        assertEquals(2, game.moveDiceTwo.move);
+        game.playerTwoMoveSecondly();
+
+        for(int i = 0; i < game.moveDiceTwo.move; i++){
+            game.moveLeftOrRight(game.gamer2, game.dirDiceTwo, game.moveDiceTwo, -1);
+        }
+        assertEquals(2, game.gamer2.moves);
+        assertEquals(675, game.gamer2.layoutY);
+        assertEquals(300, game.gamer2.layoutX);
     }
 
 //    @Test
