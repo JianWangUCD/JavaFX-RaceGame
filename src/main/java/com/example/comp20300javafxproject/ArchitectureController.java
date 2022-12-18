@@ -747,6 +747,8 @@ public class ArchitectureController {
      */
     @FXML
     void playerOneDir(ActionEvent event) {
+        if(game.state != PLAYERONE_DICE)
+            return;
         game.playerOneDir();
 
         if(game.state == PLAYERONE_MOVE)
@@ -798,6 +800,7 @@ public class ArchitectureController {
             if(game.state == SOMEONE_WON){
                 String winner = playerOneNameText.getText(); //playertwo这里要用playertwo
                 winnerText.setText(winner + " win!");
+                break; //
             }
         }
         //紧接着的两个if是不是保留一个即可？此时应该保留if(game.playerOneStuck)？
@@ -821,6 +824,8 @@ public class ArchitectureController {
 
         game.playerOneMoveSecondly();
         if(game.state == NOT_READY){
+            lastGameWinnerInfo.setText(playerOneNameText.getText() + " won, moved " +
+                    game.gamer1.moves + " squares.");
             showNewWholeRecords(); // 可能需要改动，函数内部改动？
             initAfterFinish();
         }
@@ -946,6 +951,8 @@ public class ArchitectureController {
      */
     @FXML
     void playerTwoDir(ActionEvent event) {
+        if(game.state != PLAYERTWO_DICE)
+            return;
         game.playerTwoDir();
 
         if(game.state == PLAYERTWO_MOVE)
@@ -997,22 +1004,23 @@ public class ArchitectureController {
             if(game.state == SOMEONE_WON){
                 String winner = playerTwoNameText.getText(); //playertwo这里要用playertwo
                 winnerText.setText(winner + " win!");
+                break; //
             }
         }
         //--->>> 紧接着的两个if是不是保留一个即可？此时应该保留if(game.playerTwoStuck)？
-        if(game.playerOneStuck){
-            playerOne.setLayoutY(game.gamer1.layoutY);
-            playerOneDirInfo.setText(playerOneNameText.getText() + " was stuck");
-            playerOneMoveInfo.setText("do not move");
-            updatePlayerMoves(playerOne);
-        }
+//        if(game.playerOneStuck){
+//            playerOne.setLayoutY(game.gamer1.layoutY);
+//            playerOneDirInfo.setText(playerOneNameText.getText() + " was stuck");
+//            playerOneMoveInfo.setText("do not move");
+//            updatePlayerMoves(playerOne);
+//        }
         if(game.playerTwoStuck){
             playerTwo.setLayoutY(game.gamer2.layoutY);
             playerTwoDirInfo.setText(playerTwoNameText.getText() + " was stuck");
             playerTwoMoveInfo.setText("do not move");
             updatePlayerMoves(playerTwo);
         }
-        if(i == game.moveDiceTwo.move){ //playertwo的话，if里面是原版的另一半
+        if(i == idealMoves){ // idealMoves合适吧？
             game.state = PLAYERONE_DICE;
             setPlayerTurn(playerOne);
         }
@@ -1020,6 +1028,8 @@ public class ArchitectureController {
 
         game.playerTwoMoveSecondly();
         if(game.state == NOT_READY){
+            lastGameWinnerInfo.setText(playerTwoNameText.getText() + " won, moved " +
+                    game.gamer2.moves + " squares.");
             showNewWholeRecords(); // 可能需要改动，函数内部改动？
             initAfterFinish();
         }
@@ -1056,7 +1066,7 @@ public class ArchitectureController {
             }
             game.state = PLAYERONE_DICE; // playertwo的话这里是PLAYERONE_DICE
 
-            playerOneChoice.setText("<None>");
+            playerTwoChoice.setText("<None>");
             if(game.playerOneStuck){
                 game.state = PLAYERTWO_DICE;
                 game.playerOneStuck = false;
@@ -1152,7 +1162,9 @@ public class ArchitectureController {
             playerTwoMoveRecord.setText(playerTwoNameInput.getText() + " moves:");
 //            this.playerOneMoves = 0;
 //            this.playerTwoMoves = 0;
+            Gamers copyPreviousGamers = game.previousGamers;
             game = new Game(); // 如果只是moves和wins需要重置，可以这样，如果有下次游戏不会重置的内容，就要改一下
+            game.previousGamers = copyPreviousGamers;
             game.gamer1.setName(playerOneNameInput.getText());
             game.gamer2.setName(playerTwoNameInput.getText());
             lastGameWinnerInfo.setText("");
