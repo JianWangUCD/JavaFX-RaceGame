@@ -8,6 +8,8 @@ import java.util.Collections;
  * Player of the game
  */
 public class Gamer implements Serializable, Comparable<Gamer> {
+    public double layoutX;
+    public double layoutY;
     /**
      * Player name
      */

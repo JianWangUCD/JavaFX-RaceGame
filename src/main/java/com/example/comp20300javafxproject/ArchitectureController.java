@@ -104,14 +104,14 @@ public class ArchitectureController {
 //     * Number of squares moved by player two
 //     */
 //    private int playerTwoMoves;
-    /**
-     * The winner of this round of game (Enter two names to start a new game is a new round)
-     */
-    private Gamer winner;
-    /**
-     * Records all previous winners and new winners. It persistently records the previous results even though the game program restarted.
-     */
-    private Gamers previousGamers;
+//    /**
+//     * The winner of this round of game (Enter two names to start a new game is a new round)
+//     */
+//    private Gamer winner;
+//    /**
+//     * Records all previous winners and new winners. It persistently records the previous results even though the game program restarted.
+//     */
+//    private Gamers previousGamers;
 
     /**
      * The circle representing player one
@@ -404,13 +404,13 @@ public class ArchitectureController {
      * initialize the 3 ArrayList that stores the 30 Labels of the scoreboard
      */
     public ArchitectureController(){
-        this.dirDiceOne = new DirDice();
-        this.dirDiceTwo = new DirDice();
-        this.moveDiceOne = new MoveDice();
-        this.moveDiceTwo = new MoveDice();
+//        this.dirDiceOne = new DirDice();
+//        this.dirDiceTwo = new DirDice();
+//        this.moveDiceOne = new MoveDice();
+//        this.moveDiceTwo = new MoveDice();
 //        this.playerOneMoves = 0;
 //        this.playerTwoMoves = 0;
-        this.winner = new Gamer();
+//        this.winner = new Gamer();
         this.tenApexGamersName = new ArrayList<>();
         this.tenApexGamersWins = new ArrayList<>();
         this.tenApexGamersMoves = new ArrayList<>();
@@ -510,9 +510,9 @@ public class ArchitectureController {
         playerTwoMoveRecord.setText("<P2 Name> moves:");
         playerOneMoveRecordNums.setText("0");
         playerTwoMoveRecordNums.setText("0");
-        this.winner = new Gamer();
+        //this.winner = new Gamer();
 
-        state = NOT_READY;
+        game.state = NOT_READY;
         readyText.setText("please enter names to start game");
     }
 
@@ -523,212 +523,215 @@ public class ArchitectureController {
     public void updatePlayerMoves(Circle player){
         if(player.equals(playerOne)){
             //this.playerOneMoves++;
-            game.gamer1.increaseMoves();
+            //game.gamer1.increaseMoves();
             playerOneMoveRecordNums.setText(Integer.toString(this.game.gamer1.moves));
         }
         else {
             //this.playerTwoMoves++;
-            game.gamer2.increaseMoves();
+            //game.gamer2.increaseMoves();
             playerTwoMoveRecordNums.setText(Integer.toString(this.game.gamer2.moves));
         }
     }
 
-    /**
-     * Determine if this square is fire
-     * <p>
-     * Fire is a common obstacle, the player can not enter the fire, need to go around the way forward.
-     * @param layoutX Player's x coordinate
-     * @param layoutY Player's y coordinate
-     * @return true - fire, false - not fire
-     */
-    public boolean isFire(double layoutX, double layoutY){
-        if(layoutX > 0 && layoutX < 200 && layoutY > 425 && layoutY < 500)
-            return true;
-        else return layoutX > 600 && layoutX < 800 && layoutY > 350 && layoutY < 425;
-    }
+//    /**
+//     * Determine if this square is fire
+//     * <p>
+//     * Fire is a common obstacle, the player can not enter the fire, need to go around the way forward.
+//     * @param layoutX Player's x coordinate
+//     * @param layoutY Player's y coordinate
+//     * @return true - fire, false - not fire
+//     */
+//    public boolean isFire(double layoutX, double layoutY){
+//        if(layoutX > 0 && layoutX < 200 && layoutY > 425 && layoutY < 500)
+//            return true;
+//        else return layoutX > 600 && layoutX < 800 && layoutY > 350 && layoutY < 425;
+//    }
+//
+//    /**
+//     * Determine if this square is tar pit
+//     * <p>
+//     * Tar pits are accessible obstacles. If a player passes through a tar pit, he or she will be stuck.
+//     * This player will skip the next turn.
+//     * @param layoutX Player's x coordinate
+//     * @param layoutY Player's y coordinate
+//     * @return true - tar pit, false - not tar pit
+//     */
+//    public boolean isTarPit(double layoutX, double layoutY){
+//        if(layoutX > 0 && layoutX < 200 && layoutY > 200 && layoutY < 275)
+//            return true;
+//        else return layoutX > 400 && layoutX < 600 && layoutY > 275 && layoutY < 350;
+//    }
+//
+//    /**
+//     * Determine if this square is fence
+//     * <p>
+//     * A fence is an obstacle that covers two square spaces, the player can not enter the fence,
+//     * need to go around the way forward.
+//     * @param layoutX Player's x coordinate
+//     * @param layoutY Player's y coordinate
+//     * @return true - fence, false - not fence
+//     */
+//    public boolean isFence(double layoutX, double layoutY){
+//        return layoutX > 200 && layoutX < 600 && layoutY > 50 && layoutY < 125;
+//    }
+//
+//    /**
+//     * Detect if there is another player in this square
+//     * @param player another player (not the moving player)
+//     * @param layoutX x-coordinate of the moving player
+//     * @param layoutY y-coordinate of the moving player
+//     * @return true - Another player in this square, false - not
+//     */
+//    public boolean isOtherPlayer(Circle player, double layoutX, double layoutY){
+//        return layoutX == player.getLayoutX() && layoutY == player.getLayoutY();
+//    }
+//
+//    /**
+//     * Detect if the player is now outside of board
+//     * @param layoutX Player's x coordinate
+//     * @param layoutY Player's y coordinate
+//     * @return true - outside, false - not outside
+//     */
+//    public boolean isEdge(double layoutX, double layoutY){
+//        return layoutX < 0 || layoutX > 800 || layoutY < 0 || layoutY > 700;
+//    }
+//
+//    /**
+//     * Detect if the player is now in the winning area
+//     * @param layoutX Player's x coordinate
+//     * @param layoutY Player's y coordinate
+//     * @return true - in the winner area, false - not
+//     */
+//    public boolean isFinishArea(double layoutX, double layoutY){
+//        return layoutX > 0 && layoutX < 800 && layoutY > 0 && layoutY < 50;
+//    }
 
-    /**
-     * Determine if this square is tar pit
-     * <p>
-     * Tar pits are accessible obstacles. If a player passes through a tar pit, he or she will be stuck.
-     * This player will skip the next turn.
-     * @param layoutX Player's x coordinate
-     * @param layoutY Player's y coordinate
-     * @return true - tar pit, false - not tar pit
-     */
-    public boolean isTarPit(double layoutX, double layoutY){
-        if(layoutX > 0 && layoutX < 200 && layoutY > 200 && layoutY < 275)
-            return true;
-        else return layoutX > 400 && layoutX < 600 && layoutY > 275 && layoutY < 350;
-    }
-
-    /**
-     * Determine if this square is fence
-     * <p>
-     * A fence is an obstacle that covers two square spaces, the player can not enter the fence,
-     * need to go around the way forward.
-     * @param layoutX Player's x coordinate
-     * @param layoutY Player's y coordinate
-     * @return true - fence, false - not fence
-     */
-    public boolean isFence(double layoutX, double layoutY){
-        return layoutX > 200 && layoutX < 600 && layoutY > 50 && layoutY < 125;
-    }
-
-    /**
-     * Detect if there is another player in this square
-     * @param player another player (not the moving player)
-     * @param layoutX x-coordinate of the moving player
-     * @param layoutY y-coordinate of the moving player
-     * @return true - Another player in this square, false - not
-     */
-    public boolean isOtherPlayer(Circle player, double layoutX, double layoutY){
-        return layoutX == player.getLayoutX() && layoutY == player.getLayoutY();
-    }
-
-    /**
-     * Detect if the player is now outside of board
-     * @param layoutX Player's x coordinate
-     * @param layoutY Player's y coordinate
-     * @return true - outside, false - not outside
-     */
-    public boolean isEdge(double layoutX, double layoutY){
-        return layoutX < 0 || layoutX > 800 || layoutY < 0 || layoutY > 700;
-    }
-
-    /**
-     * Detect if the player is now in the winning area
-     * @param layoutX Player's x coordinate
-     * @param layoutY Player's y coordinate
-     * @return true - in the winner area, false - not
-     */
-    public boolean isFinishArea(double layoutX, double layoutY){
-        return layoutX > 0 && layoutX < 800 && layoutY > 0 && layoutY < 50;
-    }
-
-    /**
-     * The core logical method to forward or backward movement
-     * <p>
-     * Step1: The player gets the "ideal" number of squares moved as determined by dice, execute this method
-     * <p>
-     * Step2: Each step must be judged whether this square is obstacle.
-     * <p>
-     * - If it is another player/fire/fence/edge of the board, player will stop, ending the method and the remaining moves will be stored.
-     * If this one is player 1 / 2, state will be updated to {@link #PLAYERONE_CHOOSING} / {@link #PLAYERTWO_CHOOSING}.
-     * Player 1 or Player 2 should choose to move left/move right/skip the turn.
-     * <p>
-     * - If it's a tar pit, the player will get stuck in it and skip the next turn. End method.
-     * If this one is player 1 / 2 who is stuck, state will be updated to {@link #PLAYERTWO_DICE} / {@link #PLAYERONE_DICE}.
-     * <p>
-     * - If everything is fine, then the player will move
-     * <p>
-     * Step3: If the player consumes all the "ideal" moves, state will update to {@link #PLAYERONE_DICE} / {@link #PLAYERTWO_DICE},
-     * at which time player1/2 should roll the dice.
-     * @param player the moving player
-     * @param dirDice The moving player's dice that determine the direction of movement
-     * @param moveDice The moving player's dice that determine the number of squares moved
-     */
-    public void move(Circle player, DirDice dirDice, MoveDice moveDice){
-        int pixelDistance = -75;
-        if(dirDice.dir == Direction.forward) ;
-        else if(dirDice.dir == Direction.backward)
-            pixelDistance = 75;
-
-        int i;
-        for(i = 0; i < moveDice.move; i++){
-            if(isFire(player.getLayoutX(), player.getLayoutY() + pixelDistance) ||
-                    isFence(player.getLayoutX(), player.getLayoutY() + pixelDistance) ||
-                    isOtherPlayer(player.equals(playerOne) ? playerTwo: playerOne,
-                            player.getLayoutX(), player.getLayoutY() + pixelDistance) ||
-                    isEdge(player.getLayoutX(), player.getLayoutY() + pixelDistance)){
-                state = player.equals(playerOne) ? PLAYERONE_CHOOSING : PLAYERTWO_CHOOSING;
-                break;
-            }
-            else if(isTarPit(player.getLayoutX(), player.getLayoutY() + pixelDistance)){
-                player.setLayoutY(player.getLayoutY() + pixelDistance);
-                if(player.equals(playerOne)){
-                    playerOneStuck = true;
-                    playerOneDirInfo.setText(playerOneNameText.getText() + " was stuck");
-                    playerOneMoveInfo.setText("do not move");
-                    updatePlayerMoves(playerOne);
-                }
-                else{
-                    playerTwoStuck = true;
-                    playerTwoDirInfo.setText(playerTwoNameText.getText() + " was stuck");
-                    playerTwoMoveInfo.setText("do not move");
-                    updatePlayerMoves(playerTwo);
-                }
-                state = player.equals(playerOne) ? PLAYERTWO_DICE: PLAYERONE_DICE;
-                break;
-            }
-            else {
-                player.setLayoutY(player.getLayoutY() + pixelDistance);
-                if(player.equals(playerOne))
-                    updatePlayerMoves(playerOne);
-                else
-                    updatePlayerMoves(playerTwo);
-                if(player.getLayoutY() == 0)
-                    player.setLayoutY(player.getLayoutY() + 25);
-                if(isFinishArea(player.getLayoutX(), player.getLayoutY())){
-                    //Finished!
-                    String winner = player.equals(playerOne) ? playerOneNameText.getText() : playerTwoNameText.getText();
-                    winnerText.setText(winner + " win!");
-                    state = SOMEONE_WON;
-                    break;
-                }
-            }
-        }
-        if(i == moveDice.move){
-            if(player.equals(playerOne)){
-                state = PLAYERTWO_DICE;
-                setPlayerTurn(playerTwo);
-            }
-            else {
-                state = PLAYERONE_DICE;
-                setPlayerTurn(playerOne);
-            }
-        }
-        else
-            moveDice.move -= i;
-    }
-
-    /**
-     * The core logic method when a player encounters an obstacle (other player/edge of the board/fire/fence)
-     * <p>
-     * This method is executed when the "left" or "right" button is clicked
-     * and the state is {@link #PLAYERONE_CHOOSING} or {@link #PLAYERTWO_CHOOSING}.
-     * <p>
-     * Each step must be judged whether this square is obstacle.
-     * The player will stop in front of any obstacle (including tar pits).
-     * <p>
-     * Whether the player consumes all the "ideal" moves or stops in front of an obstacle, end the method.
-     * And update the state to {@link #PLAYERONE_DICE} or {@link #PLAYERONE_DICE}.
-     * @param player the moving player
-     * @param dirDice The moving player's dice that determine the direction of movement
-     * @param moveDice The moving player's dice that determine the number of squares moved
-     * @param leftOrRight -1 is for left, 1 is for right. Because the x coordinate decreases when moving to the left
-     */
-    public void moveLeftOrRight(Circle player, DirDice dirDice, MoveDice moveDice, int leftOrRight){
-        int pixelDistance = 200 * leftOrRight;
-        for(int i = 0; i < moveDice.move; i++){
-            if(isFire(player.getLayoutX() + pixelDistance, player.getLayoutY()) ||
-                    isTarPit(player.getLayoutX() + pixelDistance, player.getLayoutY()) ||
-                    isFence(player.getLayoutX() + pixelDistance, player.getLayoutY()) ||
-                    isOtherPlayer(player.equals(playerOne) ? playerTwo: playerOne,
-                            player.getLayoutX() + pixelDistance, player.getLayoutY()) ||
-                    isEdge(player.getLayoutX() + pixelDistance, player.getLayoutY())){
-                break;
-            }
-            else {
-                player.setLayoutX(player.getLayoutX() + pixelDistance);
-                if(player.equals(playerOne))
-                    updatePlayerMoves(playerOne);
-                else
-                    updatePlayerMoves(playerTwo);
-            }
-        }
-        state = player.equals(playerOne) ? PLAYERTWO_DICE: PLAYERONE_DICE;
-    }
+//    /**
+//     * The core logical method to forward or backward movement
+//     * <p>
+//     * Step1: The player gets the "ideal" number of squares moved as determined by dice, execute this method
+//     * <p>
+//     * Step2: Each step must be judged whether this square is obstacle.
+//     * <p>
+//     * - If it is another player/fire/fence/edge of the board, player will stop, ending the method and the remaining moves will be stored.
+//     * If this one is player 1 / 2, state will be updated to {@link #PLAYERONE_CHOOSING} / {@link #PLAYERTWO_CHOOSING}.
+//     * Player 1 or Player 2 should choose to move left/move right/skip the turn.
+//     * <p>
+//     * - If it's a tar pit, the player will get stuck in it and skip the next turn. End method.
+//     * If this one is player 1 / 2 who is stuck, state will be updated to {@link #PLAYERTWO_DICE} / {@link #PLAYERONE_DICE}.
+//     * <p>
+//     * - If everything is fine, then the player will move
+//     * <p>
+//     * Step3: If the player consumes all the "ideal" moves, state will update to {@link #PLAYERONE_DICE} / {@link #PLAYERTWO_DICE},
+//     * at which time player1/2 should roll the dice.
+//     * @param player the moving player
+//     * @param dirDice The moving player's dice that determine the direction of movement
+//     * @param moveDice The moving player's dice that determine the number of squares moved
+//     */
+//    public void move(Circle player, DirDice dirDice, MoveDice moveDice){
+//        //这个函数应该在重构完被去掉，只会调用game类的move
+//
+//
+//        int pixelDistance = -75;
+//        if(dirDice.dir == Direction.forward) ;
+//        else if(dirDice.dir == Direction.backward)
+//            pixelDistance = 75;
+//
+//        int i;
+//        for(i = 0; i < moveDice.move; i++){
+//            if(isFire(player.getLayoutX(), player.getLayoutY() + pixelDistance) ||
+//                    isFence(player.getLayoutX(), player.getLayoutY() + pixelDistance) ||
+//                    isOtherPlayer(player.equals(playerOne) ? playerTwo: playerOne,
+//                            player.getLayoutX(), player.getLayoutY() + pixelDistance) ||
+//                    isEdge(player.getLayoutX(), player.getLayoutY() + pixelDistance)){
+//                state = player.equals(playerOne) ? PLAYERONE_CHOOSING : PLAYERTWO_CHOOSING;
+//                break;
+//            }
+//            else if(isTarPit(player.getLayoutX(), player.getLayoutY() + pixelDistance)){
+//                player.setLayoutY(player.getLayoutY() + pixelDistance);
+//                if(player.equals(playerOne)){
+//                    playerOneStuck = true;
+//                    playerOneDirInfo.setText(playerOneNameText.getText() + " was stuck");
+//                    playerOneMoveInfo.setText("do not move");
+//                    updatePlayerMoves(playerOne);
+//                }
+//                else{
+//                    playerTwoStuck = true;
+//                    playerTwoDirInfo.setText(playerTwoNameText.getText() + " was stuck");
+//                    playerTwoMoveInfo.setText("do not move");
+//                    updatePlayerMoves(playerTwo);
+//                }
+//                state = player.equals(playerOne) ? PLAYERTWO_DICE: PLAYERONE_DICE;
+//                break;
+//            }
+//            else {
+//                player.setLayoutY(player.getLayoutY() + pixelDistance);
+//                if(player.equals(playerOne))
+//                    updatePlayerMoves(playerOne);
+//                else
+//                    updatePlayerMoves(playerTwo);
+//                if(player.getLayoutY() == 0)
+//                    player.setLayoutY(player.getLayoutY() + 25);
+//                if(isFinishArea(player.getLayoutX(), player.getLayoutY())){
+//                    //Finished!
+//                    String winner = player.equals(playerOne) ? playerOneNameText.getText() : playerTwoNameText.getText();
+//                    winnerText.setText(winner + " win!");
+//                    state = SOMEONE_WON;
+//                    break;
+//                }
+//            }
+//        }
+//        if(i == moveDice.move){
+//            if(player.equals(playerOne)){
+//                state = PLAYERTWO_DICE;
+//                setPlayerTurn(playerTwo);
+//            }
+//            else {
+//                state = PLAYERONE_DICE;
+//                setPlayerTurn(playerOne);
+//            }
+//        }
+//        else
+//            moveDice.move -= i;
+//    }
+//
+//    /**
+//     * The core logic method when a player encounters an obstacle (other player/edge of the board/fire/fence)
+//     * <p>
+//     * This method is executed when the "left" or "right" button is clicked
+//     * and the state is {@link #PLAYERONE_CHOOSING} or {@link #PLAYERTWO_CHOOSING}.
+//     * <p>
+//     * Each step must be judged whether this square is obstacle.
+//     * The player will stop in front of any obstacle (including tar pits).
+//     * <p>
+//     * Whether the player consumes all the "ideal" moves or stops in front of an obstacle, end the method.
+//     * And update the state to {@link #PLAYERONE_DICE} or {@link #PLAYERONE_DICE}.
+//     * @param player the moving player
+//     * @param dirDice The moving player's dice that determine the direction of movement
+//     * @param moveDice The moving player's dice that determine the number of squares moved
+//     * @param leftOrRight -1 is for left, 1 is for right. Because the x coordinate decreases when moving to the left
+//     */
+//    public void moveLeftOrRight(Circle player, DirDice dirDice, MoveDice moveDice, int leftOrRight){
+//        int pixelDistance = 200 * leftOrRight;
+//        for(int i = 0; i < moveDice.move; i++){
+//            if(isFire(player.getLayoutX() + pixelDistance, player.getLayoutY()) ||
+//                    isTarPit(player.getLayoutX() + pixelDistance, player.getLayoutY()) ||
+//                    isFence(player.getLayoutX() + pixelDistance, player.getLayoutY()) ||
+//                    isOtherPlayer(player.equals(playerOne) ? playerTwo: playerOne,
+//                            player.getLayoutX() + pixelDistance, player.getLayoutY()) ||
+//                    isEdge(player.getLayoutX() + pixelDistance, player.getLayoutY())){
+//                break;
+//            }
+//            else {
+//                player.setLayoutX(player.getLayoutX() + pixelDistance);
+//                if(player.equals(playerOne))
+//                    updatePlayerMoves(playerOne);
+//                else
+//                    updatePlayerMoves(playerTwo);
+//            }
+//        }
+//        state = player.equals(playerOne) ? PLAYERTWO_DICE: PLAYERONE_DICE;
+//    }
 
     /**
      * Player 1 throws a die to obtain the direction of movement.
@@ -755,27 +758,6 @@ public class ArchitectureController {
             playerOneMoveInfo.setText("do not move");
             setPlayerTurn(playerTwo);
         }
-
-//        if(state == PLAYERONE_DICE){
-//            dirDiceOne.roll();
-//            if(dirDiceOne.dir != Direction.miss){
-//                playerOneDirInfo.setText(playerOneNameText.getText() + " should go " + dirDiceOne.dir);
-//                state = PLAYERONE_MOVE;
-//            }
-//            else{
-//                if(playerTwoStuck){
-//                    state = PLAYERONE_DICE;
-//                    playerTwoStuck = false;
-//                    setPlayerTurn(playerOne);
-//                }
-//                else{
-//                    playerOneDirInfo.setText(playerOneNameText.getText() + " skips this turn");
-//                    playerOneMoveInfo.setText("do not move");
-//                    state = PLAYERTWO_DICE;
-//                    setPlayerTurn(playerTwo);
-//                }
-//            }
-//        }
     }
 
     /**
@@ -798,33 +780,57 @@ public class ArchitectureController {
      */
     @FXML
     void playerOneMove(ActionEvent event) {
-        if(state == PLAYERONE_MOVE){
-            moveDiceOne.roll();
-            playerOneMoveInfo.setText("Number of squares to move: " + moveDiceOne.move);
+        if(!game.playerOneMoveFirstly())
+            return;
+        playerOneMoveInfo.setText("Number of squares to move: " + game.moveDiceOne.move);
 
-            move(playerOne, dirDiceOne, moveDiceOne);
-            if(state == SOMEONE_WON){
-                lastGameWinnerInfo.setText(playerOneNameText.getText() + " won, moved " +
-                        this.game.gamer1.moves + " squares.");
-                doPersistentRecord(playerOne);
-                showNewWholeRecords();
-                initAfterFinish();
-                state = NOT_READY;
+        int i;
+        int idealMoves = game.moveDiceOne.move; //
+        for(i = 0; i < idealMoves; i++){
+            game.move(game.gamer1, game.dirDiceOne, game.moveDiceOne);
+            if(game.state == PLAYERONE_CHOOSING)
+                break;
+            if(game.state == PLAYERTWO_DICE)
+                break;
+
+            playerOne.setLayoutY(game.gamer1.layoutY);
+            updatePlayerMoves(playerOne); //playertwo这里要用playertwo
+            if(game.state == SOMEONE_WON){
+                String winner = playerOneNameText.getText(); //playertwo这里要用playertwo
+                winnerText.setText(winner + " win!");
             }
-            else if(state == PLAYERONE_CHOOSING){
-                playerOneChoice.setText("Please make a choice" + " (moves: " + moveDiceOne.move +")");
-            }
-            else {
-                if(playerTwoStuck){
-                    state = PLAYERONE_DICE;
-                    playerTwoStuck = false;
-                    setPlayerTurn(playerOne);
-                }
-                else{
-                    state = PLAYERTWO_DICE;
-                    setPlayerTurn(playerTwo);
-                }
-            }
+        }
+        //紧接着的两个if是不是保留一个即可？此时应该保留if(game.playerOneStuck)？
+        if(game.playerOneStuck){
+            playerOne.setLayoutY(game.gamer1.layoutY);
+            playerOneDirInfo.setText(playerOneNameText.getText() + " was stuck");
+            playerOneMoveInfo.setText("do not move");
+            updatePlayerMoves(playerOne);
+        }
+//        if(game.playerTwoStuck){
+//            playerTwo.setLayoutY(game.gamer2.layoutY);
+//            playerTwoDirInfo.setText(playerTwoNameText.getText() + " was stuck");
+//            playerTwoMoveInfo.setText("do not move");
+//            updatePlayerMoves(playerTwo);
+//        }
+        if(i == idealMoves){ // idealMoves合适吧？
+            game.state = PLAYERTWO_DICE;
+            setPlayerTurn(playerTwo);
+        }
+
+
+        game.playerOneMoveSecondly();
+        if(game.state == NOT_READY){
+            showNewWholeRecords(); // 可能需要改动，函数内部改动？
+            initAfterFinish();
+        }
+        else if(game.state == PLAYERONE_CHOOSING)
+            playerOneChoice.setText("Please make a choice" + " (moves: " + game.moveDiceOne.move +")");
+        else {
+            if(game.state == PLAYERONE_DICE)
+                setPlayerTurn(playerOne);
+            if(game.state == PLAYERTWO_DICE)
+                setPlayerTurn(playerTwo);
         }
     }
 
@@ -839,16 +845,26 @@ public class ArchitectureController {
      */
     @FXML
     void playerOneLeft(ActionEvent event) {
-        if(state == PLAYERONE_CHOOSING){
-            moveLeftOrRight(playerOne, dirDiceOne, moveDiceOne, -1);
+        if(game.state == PLAYERONE_CHOOSING){
+
+            for(int i = 0; i < game.moveDiceOne.move; i++){
+                if(!game.moveLeftOrRight(game.gamer1, game.dirDiceOne, game.moveDiceOne, -1))
+                    break;
+                else {
+                    playerOne.setLayoutX(game.gamer1.layoutX); // playertwo的话这里是playertwo
+                    updatePlayerMoves(playerOne); // playertwo的话这里是playertwo
+                }
+            }
+            game.state = PLAYERTWO_DICE; // playertwo的话这里是PLAYERONE_DICE
+
             playerOneChoice.setText("<None>");
-            if(playerTwoStuck){
-                state = PLAYERONE_DICE;
-                playerTwoStuck = false;
+            if(game.playerTwoStuck){
+                game.state = PLAYERONE_DICE;
+                game.playerTwoStuck = false;
                 setPlayerTurn(playerOne);
             }
             else{
-                state = PLAYERTWO_DICE;
+                game.state = PLAYERTWO_DICE;
                 setPlayerTurn(playerTwo);
             }
         }
@@ -865,16 +881,16 @@ public class ArchitectureController {
      */
     @FXML
     void playerOneMiss(ActionEvent event) {
-        if(state == PLAYERONE_CHOOSING){
-            state = PLAYERTWO_DICE;
+        if(game.state == PLAYERONE_CHOOSING){
+            game.state = PLAYERTWO_DICE;
             playerOneChoice.setText("<None>");
-            if(playerTwoStuck){
-                state = PLAYERONE_DICE;
-                playerTwoStuck = false;
+            if(game.playerTwoStuck){
+                game.state = PLAYERONE_DICE;
+                game.playerTwoStuck = false;
                 setPlayerTurn(playerOne);
             }
             else{
-                state = PLAYERTWO_DICE;
+                game.state = PLAYERTWO_DICE;
                 setPlayerTurn(playerTwo);
             }
         }
@@ -891,16 +907,26 @@ public class ArchitectureController {
      */
     @FXML
     void playerOneRight(ActionEvent event) {
-        if(state == PLAYERONE_CHOOSING){
-            moveLeftOrRight(playerOne, dirDiceOne, moveDiceOne, 1);
+        if(game.state == PLAYERONE_CHOOSING){
+
+            for(int i = 0; i < game.moveDiceOne.move; i++){
+                if(!game.moveLeftOrRight(game.gamer1, game.dirDiceOne, game.moveDiceOne, 1))
+                    break;
+                else {
+                    playerOne.setLayoutX(game.gamer1.layoutX); // playertwo的话这里是playertwo
+                    updatePlayerMoves(playerOne);  // playertwo的话这里是playertwo
+                }
+            }
+            game.state = PLAYERTWO_DICE; // playertwo的话这里是PLAYERONE_DICE
+
             playerOneChoice.setText("<None>");
-            if(playerTwoStuck){
-                state = PLAYERONE_DICE;
-                playerTwoStuck = false;
+            if(game.playerTwoStuck){
+                game.state = PLAYERONE_DICE;
+                game.playerTwoStuck = false;
                 setPlayerTurn(playerOne);
             }
             else{
-                state = PLAYERTWO_DICE;
+                game.state = PLAYERTWO_DICE;
                 setPlayerTurn(playerTwo);
             }
         }
@@ -920,25 +946,16 @@ public class ArchitectureController {
      */
     @FXML
     void playerTwoDir(ActionEvent event) {
-        if(state == PLAYERTWO_DICE){
-            dirDiceTwo.roll();
-            if(dirDiceTwo.dir != Direction.miss){
-                playerTwoDirInfo.setText(playerTwoNameText.getText() + " should go " + dirDiceTwo.dir);
-                state = PLAYERTWO_MOVE;
-            }
-            else{
-                if(playerOneStuck){
-                    state = PLAYERTWO_DICE;
-                    playerOneStuck = false;
-                    setPlayerTurn(playerTwo);
-                }
-                else{
-                    playerTwoDirInfo.setText(playerTwoNameText.getText() + " skips this turn");
-                    playerTwoMoveInfo.setText("do not move");
-                    state = PLAYERONE_DICE;
-                    setPlayerTurn(playerOne);
-                }
-            }
+        game.playerTwoDir();
+
+        if(game.state == PLAYERTWO_MOVE)
+            playerTwoDirInfo.setText(playerTwoNameText.getText() + " should go " + game.dirDiceTwo.dir);
+        else if(game.state == PLAYERTWO_DICE)
+            setPlayerTurn(playerTwo);
+        else if(game.state == PLAYERONE_DICE){
+            playerTwoDirInfo.setText(playerTwoNameText.getText() + " skips this turn");
+            playerTwoMoveInfo.setText("do not move");
+            setPlayerTurn(playerOne);
         }
     }
 
@@ -962,33 +979,57 @@ public class ArchitectureController {
      */
     @FXML
     void PlayerTwoMove(ActionEvent event) {
-        if(state == PLAYERTWO_MOVE){
-            moveDiceTwo.roll();
-            playerTwoMoveInfo.setText("Number of squares to move: " + moveDiceTwo.move);
+        if(!game.playerTwoMoveFirstly())
+            return;
+        playerTwoMoveInfo.setText("Number of squares to move: " + game.moveDiceTwo.move);
 
-            move(playerTwo, dirDiceTwo, moveDiceTwo);
-            if(state == SOMEONE_WON){
-                lastGameWinnerInfo.setText(playerTwoNameText.getText() + " won, moved " +
-                        this.game.gamer2.moves + " squares.");
-                doPersistentRecord(playerTwo);
-                showNewWholeRecords();
-                initAfterFinish();
-                state = NOT_READY;
+        int i;
+        int idealMoves = game.moveDiceTwo.move;
+        for(i = 0; i < idealMoves; i++){
+            game.move(game.gamer2, game.dirDiceTwo, game.moveDiceTwo);
+            if(game.state == PLAYERTWO_CHOOSING)
+                break;
+            if(game.state == PLAYERONE_DICE)
+                break;
+
+            playerTwo.setLayoutY(game.gamer2.layoutY);
+            updatePlayerMoves(playerTwo); //playertwo这里要用playertwo
+            if(game.state == SOMEONE_WON){
+                String winner = playerTwoNameText.getText(); //playertwo这里要用playertwo
+                winnerText.setText(winner + " win!");
             }
-            else if(state == PLAYERTWO_CHOOSING){
-                playerTwoChoice.setText("Please make a choice" + " (moves: " + moveDiceTwo.move +")");
-            }
-            else {
-                if(playerOneStuck){
-                    state = PLAYERTWO_DICE;
-                    playerOneStuck = false;
-                    setPlayerTurn(playerTwo);
-                }
-                else{
-                    state = PLAYERONE_DICE;
-                    setPlayerTurn(playerOne);
-                }
-            }
+        }
+        //--->>> 紧接着的两个if是不是保留一个即可？此时应该保留if(game.playerTwoStuck)？
+        if(game.playerOneStuck){
+            playerOne.setLayoutY(game.gamer1.layoutY);
+            playerOneDirInfo.setText(playerOneNameText.getText() + " was stuck");
+            playerOneMoveInfo.setText("do not move");
+            updatePlayerMoves(playerOne);
+        }
+        if(game.playerTwoStuck){
+            playerTwo.setLayoutY(game.gamer2.layoutY);
+            playerTwoDirInfo.setText(playerTwoNameText.getText() + " was stuck");
+            playerTwoMoveInfo.setText("do not move");
+            updatePlayerMoves(playerTwo);
+        }
+        if(i == game.moveDiceTwo.move){ //playertwo的话，if里面是原版的另一半
+            game.state = PLAYERONE_DICE;
+            setPlayerTurn(playerOne);
+        }
+
+
+        game.playerTwoMoveSecondly();
+        if(game.state == NOT_READY){
+            showNewWholeRecords(); // 可能需要改动，函数内部改动？
+            initAfterFinish();
+        }
+        else if(game.state == PLAYERTWO_CHOOSING)
+            playerTwoChoice.setText("Please make a choice" + " (moves: " + game.moveDiceTwo.move +")");
+        else {
+            if(game.state == PLAYERTWO_DICE)
+                setPlayerTurn(playerTwo);
+            if(game.state == PLAYERONE_DICE)
+                setPlayerTurn(playerOne);
         }
     }
 
@@ -1003,16 +1044,26 @@ public class ArchitectureController {
      */
     @FXML
     void playerTwoLeft(ActionEvent event) {
-        if(state == PLAYERTWO_CHOOSING){
-            moveLeftOrRight(playerTwo, dirDiceTwo, moveDiceTwo, -1);
-            playerTwoChoice.setText("<None>");
-            if(playerOneStuck){
-                state = PLAYERTWO_DICE;
-                playerOneStuck = false;
+        if(game.state == PLAYERTWO_CHOOSING){
+
+            for(int i = 0; i < game.moveDiceTwo.move; i++){
+                if(!game.moveLeftOrRight(game.gamer2, game.dirDiceTwo, game.moveDiceTwo, -1))
+                    break;
+                else {
+                    playerTwo.setLayoutX(game.gamer2.layoutX); // playertwo的话这里是playertwo
+                    updatePlayerMoves(playerTwo); // playertwo的话这里是playertwo
+                }
+            }
+            game.state = PLAYERONE_DICE; // playertwo的话这里是PLAYERONE_DICE
+
+            playerOneChoice.setText("<None>");
+            if(game.playerOneStuck){
+                game.state = PLAYERTWO_DICE;
+                game.playerOneStuck = false;
                 setPlayerTurn(playerTwo);
             }
             else{
-                state = PLAYERONE_DICE;
+                game.state = PLAYERONE_DICE;
                 setPlayerTurn(playerOne);
             }
         }
@@ -1029,16 +1080,16 @@ public class ArchitectureController {
      */
     @FXML
     void playerTwoMiss(ActionEvent event) {
-        if(state == PLAYERTWO_CHOOSING){
-            state = PLAYERONE_DICE;
+        if(game.state == PLAYERTWO_CHOOSING){
+            game.state = PLAYERONE_DICE;
             playerTwoChoice.setText("<None>");
-            if(playerOneStuck){
-                state = PLAYERTWO_DICE;
-                playerOneStuck = false;
+            if(game.playerOneStuck){
+                game.state = PLAYERTWO_DICE;
+                game.playerOneStuck = false;
                 setPlayerTurn(playerTwo);
             }
             else{
-                state = PLAYERONE_DICE;
+                game.state = PLAYERONE_DICE;
                 setPlayerTurn(playerOne);
             }
         }
@@ -1055,16 +1106,26 @@ public class ArchitectureController {
      */
     @FXML
     void playerTwoRight(ActionEvent event) {
-        if(state == PLAYERTWO_CHOOSING){
-            moveLeftOrRight(playerTwo, dirDiceTwo, moveDiceTwo, 1);
+        if(game.state == PLAYERTWO_CHOOSING){
+
+            for(int i = 0; i < game.moveDiceTwo.move; i++){
+                if(!game.moveLeftOrRight(game.gamer2, game.dirDiceTwo, game.moveDiceTwo, 1))
+                    break;
+                else {
+                    playerTwo.setLayoutX(game.gamer2.layoutX); // playertwo的话这里是playertwo
+                    updatePlayerMoves(playerTwo);  // playertwo的话这里是playertwo
+                }
+            }
+            game.state = PLAYERONE_DICE; // playertwo的话这里是PLAYERONE_DICE
+
             playerTwoChoice.setText("<None>");
-            if(playerOneStuck){
-                state = PLAYERTWO_DICE;
-                playerOneStuck = false;
+            if(game.playerOneStuck){
+                game.state = PLAYERTWO_DICE;
+                game.playerOneStuck = false;
                 setPlayerTurn(playerTwo);
             }
             else{
-                state = PLAYERONE_DICE;
+                game.state = PLAYERONE_DICE;
                 setPlayerTurn(playerOne);
             }
         }
@@ -1076,8 +1137,8 @@ public class ArchitectureController {
      * @param event Hit the "Start" Button
      */
     @FXML
-    void startGame(ActionEvent event) {
-        if(state != NOT_READY)
+    void startGame(ActionEvent event) { //此函数原版未写在注释里，可查阅原版project
+        if(game.state != NOT_READY)
             return;
         if(playerOneNameInput.getText().trim().equals("") || playerTwoNameInput.getText().trim().equals("")) ;
         else {
@@ -1092,12 +1153,14 @@ public class ArchitectureController {
 //            this.playerOneMoves = 0;
 //            this.playerTwoMoves = 0;
             game = new Game(); // 如果只是moves和wins需要重置，可以这样，如果有下次游戏不会重置的内容，就要改一下
+            game.gamer1.setName(playerOneNameInput.getText());
+            game.gamer2.setName(playerTwoNameInput.getText());
             lastGameWinnerInfo.setText("");
             playerOne.setLayoutX(100);
             playerOne.setLayoutY(675);
             playerTwo.setLayoutX(700);
             playerTwo.setLayoutY(675);
-            state = PLAYERONE_DICE;
+            game.state = PLAYERONE_DICE;
             setPlayerTurn(playerOne);
         }
 
@@ -1128,11 +1191,12 @@ public class ArchitectureController {
         }
 
         try {
-            this.previousGamers = getPreviousGamers();
-            for(int i = 0; i < this.previousGamers.allWinners.size() && i < 10; i++){
-                this.tenApexGamersName.get(i).setText(this.previousGamers.allWinners.get(i).name);
-                this.tenApexGamersWins.get(i).setText(this.previousGamers.allWinners.get(i).numWins + "");
-                this.tenApexGamersMoves.get(i).setText(this.previousGamers.allWinners.get(i).allMoves);
+            game.previousGamers = game.getPreviousGamers();
+            //this.previousGamers = getPreviousGamers();
+            for(int i = 0; i < game.previousGamers.allWinners.size() && i < 10; i++){
+                this.tenApexGamersName.get(i).setText(game.previousGamers.allWinners.get(i).name);
+                this.tenApexGamersWins.get(i).setText(game.previousGamers.allWinners.get(i).numWins + "");
+                this.tenApexGamersMoves.get(i).setText(game.previousGamers.allWinners.get(i).allMoves);
             }
         }catch (Exception exception){
             System.out.println("No Previous Record");
@@ -1147,90 +1211,90 @@ public class ArchitectureController {
      * Show the updated game records stored in ArrayList of {@link #previousGamers}
      */
     public void showNewWholeRecords(){
-        for(int i = 0; i < this.previousGamers.allWinners.size() && i < 10; i++){
-            this.tenApexGamersName.get(i).setText(this.previousGamers.allWinners.get(i).name);
-            this.tenApexGamersWins.get(i).setText(this.previousGamers.allWinners.get(i).numWins + "");
-            this.tenApexGamersMoves.get(i).setText(this.previousGamers.allWinners.get(i).allMoves);
+        for(int i = 0; i < game.previousGamers.allWinners.size() && i < 10; i++){
+            this.tenApexGamersName.get(i).setText(game.previousGamers.allWinners.get(i).name);
+            this.tenApexGamersWins.get(i).setText(game.previousGamers.allWinners.get(i).numWins + "");
+            this.tenApexGamersMoves.get(i).setText(game.previousGamers.allWinners.get(i).allMoves);
         }
     }
 
-    /**
-     * Clear the history of game score board
-     */
-    public void doClearRecord(){
-        try {
-            PrintWriter writer =
-                    new PrintWriter("Record.ser");
-            writer.print("");
-            writer.close();
-        }catch (FileNotFoundException ex){
-            System.out.println("File not found");
-        }
-    }
+//    /**
+//     * Clear the history of game score board
+//     */
+//    public void doClearRecord(){
+//        try {
+//            PrintWriter writer =
+//                    new PrintWriter("Record.ser");
+//            writer.print("");
+//            writer.close();
+//        }catch (FileNotFoundException ex){
+//            System.out.println("File not found");
+//        }
+//    }
 
-    /**
-     * Put the new winner's record into the total record.
-     * <p>
-     * Step1: get name and moves of winner
-     * <p>
-     * Step2: set name and moves into {@link #winner} object
-     * <p>
-     * Step3:
-     * <p>
-     * - If there is no previous winners, just put this new winner in to ArrayList of {@link #previousGamers}
-     * <p>
-     * - If there are some previous winners, execute {@link Gamers#mergeNewRecord(Gamer)} and {@link Gamers#sortAllRecords()} methods
-     * <p>
-     * Step4: execute {@link #doClearRecord()} method
-     * <p>
-     * Step5: put the total records into a file and store this file locally.
-     * @param player The winner of this round of game (Enter two names to start a new game is a new round)
-     */
-    public void doPersistentRecord(Circle player){
-        String name = player.equals(playerOne) ? playerOneNameText.getText() : playerTwoNameText.getText();
-        int moves = player.equals(playerOne) ? this.game.gamer1.moves : this.game.gamer2.moves;
-        winner.setName(name);
-        winner.setNumWins(1);
-        winner.setMoves(moves);
-        winner.setAllMoves();
-        if(this.previousGamers == null){
-            this.previousGamers = new Gamers();
-            this.previousGamers.allWinners.add(winner);
-        }
-        else {
-            this.previousGamers.mergeNewRecord(winner);
-            this.previousGamers.sortAllRecords();
-        }
+//    /**
+//     * Put the new winner's record into the total record.
+//     * <p>
+//     * Step1: get name and moves of winner
+//     * <p>
+//     * Step2: set name and moves into {@link #winner} object
+//     * <p>
+//     * Step3:
+//     * <p>
+//     * - If there is no previous winners, just put this new winner in to ArrayList of {@link #previousGamers}
+//     * <p>
+//     * - If there are some previous winners, execute {@link Gamers#mergeNewRecord(Gamer)} and {@link Gamers#sortAllRecords()} methods
+//     * <p>
+//     * Step4: execute {@link #doClearRecord()} method
+//     * <p>
+//     * Step5: put the total records into a file and store this file locally.
+//     * @param player The winner of this round of game (Enter two names to start a new game is a new round)
+//     */
+//    public void doPersistentRecord(Circle player){ //此函数原版未写在注释里，可查阅原版project
+//        String name = player.equals(playerOne) ? playerOneNameText.getText() : playerTwoNameText.getText();
+//        int moves = player.equals(playerOne) ? this.game.gamer1.moves : this.game.gamer2.moves;
+//        winner.setName(name);
+//        winner.setNumWins(1);
+//        winner.setMoves(moves);
+//        winner.setAllMoves();
+//        if(this.previousGamers == null){
+//            this.previousGamers = new Gamers();
+//            this.previousGamers.allWinners.add(winner);
+//        }
+//        else {
+//            this.previousGamers.mergeNewRecord(winner);
+//            this.previousGamers.sortAllRecords();
+//        }
+//
+//        doClearRecord();
+//        try {
+//            FileOutputStream fileOutputStream =
+//                    new FileOutputStream("Record.ser");
+//            ObjectOutputStream out = new ObjectOutputStream(fileOutputStream);
+//            out.writeObject(this.previousGamers);
+//            out.close();
+//            fileOutputStream.close();
+//        }catch (IOException ex){
+//
+//        }
+//    }
 
-        doClearRecord();
-        try {
-            FileOutputStream fileOutputStream =
-                    new FileOutputStream("Record.ser");
-            ObjectOutputStream out = new ObjectOutputStream(fileOutputStream);
-            out.writeObject(this.previousGamers);
-            out.close();
-            fileOutputStream.close();
-        }catch (IOException ex){
-
-        }
-    }
-
-    /**
-     * get records of all previous winners
-     * @return Records all previous winners
-     */
-    public Gamers getPreviousGamers(){
-        Gamers tempGames = null;
-        try{
-            ObjectInputStream in =
-                    new ObjectInputStream(new FileInputStream("Record.ser"));
-            tempGames = (Gamers) in.readObject();
-            in.close();
-        }catch (Exception ex){
-
-        }
-        return tempGames;
-    }
+//    /**
+//     * get records of all previous winners
+//     * @return Records all previous winners
+//     */
+//    public Gamers getPreviousGamers(){
+//        Gamers tempGames = null;
+//        try{
+//            ObjectInputStream in =
+//                    new ObjectInputStream(new FileInputStream("Record.ser"));
+//            tempGames = (Gamers) in.readObject();
+//            in.close();
+//        }catch (Exception ex){
+//
+//        }
+//        return tempGames;
+//    }
 
     /**
      * Clear the history of game score board and reset the info of game score board
@@ -1242,7 +1306,7 @@ public class ArchitectureController {
      */
     @FXML
     void clearRecord(ActionEvent event) {
-        doClearRecord();
+        game.doClearRecord();
 
         if(!isScoreBoardReady){
             setTenApexGamersName();
