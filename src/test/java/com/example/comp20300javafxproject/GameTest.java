@@ -358,71 +358,150 @@ class GameTest {
         assertEquals(300, game.gamer2.layoutX);
     }
 
-//    @Test
-//    void isFire() {
-//    }
-//
-//    @Test
-//    void isTarPit() {
-//    }
-//
-//    @Test
-//    void isFence() {
-//    }
-//
-//    @Test
-//    void isOtherPlayer() {
-//    }
-//
-//    @Test
-//    void isEdge() {
-//    }
-//
-//    @Test
-//    void isFinishArea() {
-//    }
-//
-//    @Test
-//    void move() {
-//    }
-//
-//    @Test
-//    void moveLeftOrRight() {
-//    }
-//
-//    @Test
-//    void playerOneDir() {
-//    }
-//
-//    @Test
-//    void playerOneMoveFirstly() {
-//    }
-//
-//    @Test
-//    void playerOneMoveSecondly() {
-//    }
-//
-//    @Test
-//    void playerTwoDir() {
-//    }
-//
-//    @Test
-//    void playerTwoMoveFirstly() {
-//    }
-//
-//    @Test
-//    void playerTwoMoveSecondly() {
-//    }
-//
-//    @Test
-//    void doClearRecord() {
-//    }
-//
-//    @Test
-//    void doPersistentRecord() {
-//    }
-//
-//    @Test
-//    void getPreviousGamers() {
-//    }
+    @Test
+    @DisplayName("player 1 meets fence")
+    void test17(){
+        Game game = new Game();
+        game.gamer1.layoutX = 300;
+        game.gamer1.layoutY = 300;
+        game.state = PLAYERONE_MOVE;
+        game.dirDiceOne.dir = Direction.forward;
+        game.playerOneMoveFirstly();
+        game.moveDiceOne.move = 4;
+        int idealMoves = game.moveDiceOne.move;
+        for(int i = 0; i < idealMoves; i++){
+            game.move(game.gamer1, game.dirDiceOne, game.moveDiceOne);
+            if(game.state == PLAYERONE_CHOOSING)
+                break;
+        }
+        game.playerOneMoveSecondly();
+        assertEquals(2, game.gamer1.moves);
+        assertEquals(PLAYERONE_CHOOSING, game.state);
+        assertEquals(300, game.gamer1.layoutX);
+        assertEquals(150, game.gamer1.layoutY);
+
+        //Assume that going to the left next
+        for(int i = 0; i < game.moveDiceOne.move; i++){
+            if(!game.moveLeftOrRight(game.gamer1, game.dirDiceOne, game.moveDiceOne, -1))
+                break;
+        }
+        assertEquals(3, game.gamer1.moves);
+        assertEquals(150, game.gamer1.layoutY);
+        assertEquals(100, game.gamer1.layoutX);
+    }
+
+    @Test
+    @DisplayName("player 2 meets fence")
+    void test18(){
+        Game game = new Game();
+        game.gamer2.layoutX = 300;
+        game.gamer2.layoutY = 300;
+        game.state = PLAYERTWO_MOVE;
+        game.dirDiceTwo.dir = Direction.forward;
+        game.playerTwoMoveFirstly();
+        game.moveDiceTwo.move = 4;
+        int idealMoves = game.moveDiceTwo.move;
+        for(int i = 0; i < idealMoves; i++){
+            game.move(game.gamer2, game.dirDiceTwo, game.moveDiceTwo);
+            if(game.state == PLAYERTWO_CHOOSING)
+                break;
+        }
+        game.playerTwoMoveSecondly();
+        assertEquals(2, game.gamer2.moves);
+        assertEquals(PLAYERTWO_CHOOSING, game.state);
+        assertEquals(300, game.gamer2.layoutX);
+        assertEquals(150, game.gamer2.layoutY);
+
+        //Assume that going to the right next
+        for(int i = 0; i < game.moveDiceTwo.move; i++){
+            if(!game.moveLeftOrRight(game.gamer2, game.dirDiceTwo, game.moveDiceTwo, 1))
+                break;
+        }
+        assertEquals(4, game.gamer2.moves);
+        assertEquals(150, game.gamer2.layoutY);
+        assertEquals(700, game.gamer2.layoutX);
+    }
+
+    @Test
+    @DisplayName("The player 1 enters the finish area")
+    void test19(){
+        Game game = new Game();
+        game.gamer1.layoutX = 100;
+        game.gamer1.layoutY = 150;
+        game.state = PLAYERONE_MOVE;
+        game.dirDiceOne.dir = Direction.forward;
+        game.playerOneMoveFirstly();
+        game.moveDiceOne.move = 4;
+        int idealMoves = game.moveDiceOne.move;
+        for(int i = 0; i < idealMoves; i++){
+            game.move(game.gamer1, game.dirDiceOne, game.moveDiceOne);
+            if(game.state == SOMEONE_WON)
+                break;
+        }
+        assertEquals(SOMEONE_WON, game.state);
+        assertEquals(2, game.gamer1.moves);
+        assertEquals(100, game.gamer1.layoutX);
+        assertEquals(25, game.gamer1.layoutY);
+    }
+
+    @Test
+    @DisplayName("The player 2 enters the finish area")
+    void test20(){
+        Game game = new Game();
+        game.gamer2.layoutX = 700;
+        game.gamer2.layoutY = 225;
+        game.state = PLAYERTWO_MOVE;
+        game.dirDiceTwo.dir = Direction.forward;
+        game.playerTwoMoveFirstly();
+        game.moveDiceTwo.move = 4;
+        int idealMoves = game.moveDiceTwo.move;
+        for(int i = 0; i < idealMoves; i++){
+            game.move(game.gamer2, game.dirDiceTwo, game.moveDiceTwo);
+            if(game.state == SOMEONE_WON)
+                break;
+        }
+        assertEquals(SOMEONE_WON, game.state);
+        assertEquals(3, game.gamer2.moves);
+        assertEquals(700, game.gamer2.layoutX);
+        assertEquals(25, game.gamer2.layoutY);
+    }
+
+    @Test
+    @DisplayName("player 1 wins")
+    void test21(){
+        Game game = new Game();
+        game.gamer1.setName("Riki");
+        game.gamer1.layoutX = 100;
+        game.gamer1.layoutY = 150;
+        game.state = PLAYERONE_MOVE;
+        game.dirDiceOne.dir = Direction.forward;
+        game.playerOneMoveFirstly();
+        game.moveDiceOne.move = 4;
+        int idealMoves = game.moveDiceOne.move;
+        for(int i = 0; i < idealMoves; i++){
+            game.move(game.gamer1, game.dirDiceOne, game.moveDiceOne);
+            if(game.state == SOMEONE_WON)
+                break;
+        }
+        assertEquals(SOMEONE_WON, game.state);
+        assertEquals(2, game.gamer1.moves);
+        assertEquals(100, game.gamer1.layoutX);
+        assertEquals(25, game.gamer1.layoutY);
+
+        game.playerOneMoveSecondly();
+        assertEquals(NOT_READY, game.state);
+        assertEquals("Riki", game.winner.name);
+        assertEquals(2, game.winner.moves);
+        assertEquals("2", game.winner.allMoves);
+        assertEquals(1, game.winner.numWins);
+    }
+
+    // double stuck ?
+    // 左移/右移时遇到障碍？
+    // someone wins
+    // doPersistentRecord
+    // getPreviousGamers
+    // doClearRecord
+    // new winners (2+ records) ?
+
 }
