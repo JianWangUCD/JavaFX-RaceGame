@@ -20,9 +20,9 @@ Note that there are three images in the project, Fence.png, Fire.png and TarPit.
 
 **Note**: Please enter the names of Player 1 and Player 2 **before** clicking the `Start` button, they must be **non-empty** and **not full spaces**.
 
-`Show Record` button: show previous game records on the scoreboard
+`Show Record` button: show previous game records on the scoreboard (PS: You can press the button at any time during the game (before a new winner appears) to show previous records)
 
-`Start` button: Enter two names and start the game. At this time the previous game records are also displayed on the scoreboard.
+`Start` button: Enter two names and start the game.
 
 ### Step 4: Read the following information
 
@@ -78,3 +78,79 @@ A fence is an obstacle that covers two square spaces, the player can not enter t
 The scoreboard shows records of the top ten players, who are listed in descending order of number of games won.
 
 ### Step 9: Start from step 3 and play in order until you want to quit the game
+
+
+
+## Unit tests
+
+### GameTest
+
+`Game` class is the core logic class of the project. There are 25 tests in GameTest.java.
+
+sampleTest - A simple test of throwing dice to detect whether the state of the game is normal or not.
+
+test 1 - player 1 goes forward and moves 2 squares
+
+test 2 - player 2 goes forward and moves 3 squares
+
+test 3 - player 1 meets fire
+
+test 4 - player 1 meets fire and move right
+
+test 5 - player 1 meets fire and move left, the left side is the left edge of board
+
+test 6 - player 1 meets fire and then choose to miss this turn
+
+test 7 - player 2 meets fire
+
+test 8 - player 2 meets fire and move left
+
+test 9 - player 2 meets fire and move right, the right side is the right edge of board
+
+test 10 - player 2 meets fire and then choose to miss this turn
+
+test 11 - player 1 meets tar pit
+
+test 12 - player 2 meets tar pit
+
+test 13 - player 1 meets player 2
+
+test 14 - player 2 meets player 1
+
+test 15 - player 1 meets the edge of board
+
+test 16 - player 2 meets the edge of board
+
+test 17 - player 1 meets fence
+
+test 18 - player 2 meets fence
+
+test 19 - The player 1 enters the finish area
+
+test 20 - The player 2 enters the finish area
+
+test 21 - player 1 wins (no need to test player 2 wins, the logic is same)
+
+test 22 - Persistent Record
+
+test 23 - Clear the record
+
+test 24 - New winners are recorded persistently
+
+### GamerTest
+
+testGamerInstance - test for creating new instance
+
+### GamersTest
+
+testMergeNewRecord - test for merging new winner in total record
+
+testSortAllRecords - test for sorting the total records by number of wins of winners
+
+### DirDiceTest
+
+roll - test for rolling the dice to get the direction of movement
+
+### MoveDiceTest
+
+roll - test for rolling the dice to get the ideal number of squares moved

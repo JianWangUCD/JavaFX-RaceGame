@@ -575,7 +575,4 @@ class GameTest {
         assertEquals("17", game.previousGamers.allWinners.get(2).allMoves);
     }
 
-    // double stuck ?
-    // 左移/右移时遇到障碍？
-
 }

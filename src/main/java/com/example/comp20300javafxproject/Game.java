@@ -4,6 +4,9 @@ import javafx.event.ActionEvent;
 
 import java.io.*;
 
+/**
+ * The Game Logic
+ */
 public class Game {
     /**
      * player one
@@ -226,21 +229,15 @@ public class Game {
             if(player.equals(gamer1)){
                 playerOneStuck = true;
                 gamer1.increaseMoves();
-//                    playerOneDirInfo.setText(playerOneNameText.getText() + " was stuck");
-//                    playerOneMoveInfo.setText("do not move");
-//                    updatePlayerMoves(playerOne);
             }
             else{
                 playerTwoStuck = true;
                 gamer2.increaseMoves();
-//                    playerTwoDirInfo.setText(playerTwoNameText.getText() + " was stuck");
-//                    playerTwoMoveInfo.setText("do not move");
-//                    updatePlayerMoves(playerTwo);
             }
-            state = player.equals(gamer1) ? PLAYERTWO_DICE: PLAYERONE_DICE; //这里会影响stuck的判断吗: 看起来不会
+            state = player.equals(gamer1) ? PLAYERTWO_DICE: PLAYERONE_DICE;
             moveDice.move -= 1;
         }
-        else { //这部分没把原来代码放在comments里
+        else {
             player.layoutY += pixelDistance;
             if(player.equals(gamer1))
                 gamer1.increaseMoves();
@@ -255,20 +252,6 @@ public class Game {
             }
             moveDice.move -= 1;
         }
-        /* 这里没有这一段，因为这个method是move的单次运动逻辑代码。在测试的时候这里的代码需要手动添加进test，按照controller类里的样子写
-        if(i == moveDice.move){
-            if(player.equals(playerOne)){
-                state = PLAYERTWO_DICE;
-                setPlayerTurn(playerTwo);
-            }
-            else {
-                state = PLAYERONE_DICE;
-                setPlayerTurn(playerOne);
-            }
-        }
-        else
-            moveDice.move -= i;
-         */
     }
 
     /**
@@ -303,13 +286,11 @@ public class Game {
         }
         else {
             player.layoutX += pixelDistance;
-            //player.setLayoutX(player.getLayoutX() + pixelDistance);
             if(player.equals(gamer1))
                 gamer1.increaseMoves();
             else
                 gamer2.increaseMoves();
         }
-        //state = player.equals(playerOne) ? PLAYERTWO_DICE: PLAYERONE_DICE; //有for循环的时候，结束for循环才会运行这个
 
         return isPlayerMoving;
     }
@@ -329,20 +310,15 @@ public class Game {
         if(state == PLAYERONE_DICE){
             dirDiceOne.roll();
             if(dirDiceOne.dir != Direction.miss){
-                //
                 state = PLAYERONE_MOVE;
             }
             else {
                 if(playerTwoStuck){
                     state = PLAYERONE_DICE;
                     playerTwoStuck = false;
-                    //
                 }
                 else {
-                    //
-                    //
                     state = PLAYERTWO_DICE;
-                    //
                 }
             }
         }
@@ -369,17 +345,14 @@ public class Game {
             state = NOT_READY;
         }
         else if(state == PLAYERONE_CHOOSING) {
-//            playerOneChoice.setText("Please make a choice" + " (moves: " + moveDiceOne.move +")");
         }
         else {
             if(playerTwoStuck){
                 state = PLAYERONE_DICE;
                 playerTwoStuck = false;
-                //setPlayerTurn(playerOne);
             }
             else{
                 state = PLAYERTWO_DICE;
-                //setPlayerTurn(playerTwo);
             }
         }
     }
@@ -399,20 +372,15 @@ public class Game {
         if(state == PLAYERTWO_DICE){
             dirDiceTwo.roll();
             if(dirDiceTwo.dir != Direction.miss){
-                //
                 state = PLAYERTWO_MOVE;
             }
             else {
                 if(playerOneStuck){
                     state = PLAYERTWO_DICE;
                     playerOneStuck = false;
-                    //
                 }
                 else {
-                    //
-                    //
                     state = PLAYERONE_DICE;
-                    //
                 }
             }
         }
@@ -439,17 +407,14 @@ public class Game {
             state = NOT_READY;
         }
         else if(state == PLAYERTWO_CHOOSING) {
-//            playerTwoChoice.setText("Please make a choice" + " (moves: " + moveDiceTwo.move +")");
         }
         else {
             if(playerOneStuck){
                 state = PLAYERTWO_DICE;
                 playerOneStuck = false;
-                //setPlayerTurn(playerTwo);
             }
             else{
                 state = PLAYERONE_DICE;
-                //setPlayerTurn(playerOne);
             }
         }
     }
