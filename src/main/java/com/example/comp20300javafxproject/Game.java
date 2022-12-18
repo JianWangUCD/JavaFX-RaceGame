@@ -1,6 +1,6 @@
 package com.example.comp20300javafxproject;
 
-import javafx.scene.shape.Circle;
+import javafx.event.ActionEvent;
 
 import java.io.*;
 
@@ -90,6 +90,12 @@ public class Game {
      */
     public boolean playerTwoStuck = false;
 
+    /**
+     * Initialize four dices,
+     * set two players' moves to 0,
+     * initialize two players' location,
+     * initialize the ({@link #winner}),
+     */
     public Game(){
         this.gamer1 = new Gamer();
         this.gamer2 = new Gamer();
@@ -176,6 +182,29 @@ public class Game {
         return layoutX > 0 && layoutX < 800 && layoutY > 0 && layoutY < 50;
     }
 
+
+
+    /**
+     * The core logical method to forward or backward movement
+     * <p>
+     * Step1: The player gets the "ideal" number of squares moved as determined by dice, execute this method
+     * <p>
+     * Step2: Each step must be judged whether this square is obstacle. So this method will be executed several times.
+     * <p>
+     * - If it is another player/fire/fence/edge of the board, player will stop, ending the method and the remaining moves will be stored.
+     * If this one is player 1 / 2, state will be updated to {@link #PLAYERONE_CHOOSING} / {@link #PLAYERTWO_CHOOSING}.
+     * Player 1 or Player 2 should choose to move left/move right/skip the turn.
+     * <p>
+     * - If it's a tar pit, the player will get stuck in it and skip the next turn. End method.
+     * If this one is player 1 / 2 who is stuck, state will be updated to {@link #PLAYERTWO_DICE} / {@link #PLAYERONE_DICE}.
+     * <p>
+     * - If everything is fine, then the player will move
+     * <p>
+     *
+     * @param player the moving player
+     * @param dirDice The moving player's dice that determine the direction of movement
+     * @param moveDice The moving player's dice that determine the number of squares moved
+     */
     public void move(Gamer player, DirDice dirDice, MoveDice moveDice){
         int pixelDistance = -75;
         if(dirDice.dir == Direction.forward) ;
@@ -241,6 +270,26 @@ public class Game {
             moveDice.move -= i;
          */
     }
+
+    /**
+     * The core logic method when a player encounters an obstacle (other player/edge of the board/fire/fence)
+     * <p>
+     * This method is executed when the "left" or "right" button is clicked
+     * and the state is {@link #PLAYERONE_CHOOSING} or {@link #PLAYERTWO_CHOOSING}.
+     * <p>
+     * Each step must be judged whether this square is obstacle. So this method will be executed several times.
+     * The player will stop in front of any obstacle (including tar pits).
+     * <p>
+     * Whether the player consumes all the "ideal" moves or stops in front of an obstacle, end the method.
+     * And update the state to {@link #PLAYERONE_DICE} or {@link #PLAYERONE_DICE} in
+     * {@link ArchitectureController#playerOneLeft(ActionEvent)} or {@link ArchitectureController#playerOneRight(ActionEvent)}
+     * or {@link ArchitectureController#playerTwoLeft(ActionEvent)} or {@link ArchitectureController#playerTwoRight(ActionEvent)}.
+     * @param player the moving player
+     * @param dirDice The moving player's dice that determine the direction of movement
+     * @param moveDice The moving player's dice that determine the number of squares moved
+     * @param leftOrRight -1 is for left, 1 is for right. Because the x coordinate decreases when moving to the left
+     * @return true - normal moving, false - met with an obstacle
+     */
     public boolean moveLeftOrRight(Gamer player, DirDice dirDice, MoveDice moveDice, int leftOrRight){
         boolean isPlayerMoving = true;
         int pixelDistance = 200 * leftOrRight;
@@ -265,6 +314,17 @@ public class Game {
         return isPlayerMoving;
     }
 
+    /**
+     * Player 1 throws a die to obtain the direction of movement.
+     * <p>
+     * Step1: Player 1 throws the dice. If the result is not `miss`, the state is updated to {@link #PLAYERONE_MOVE}.
+     * <p>
+     * Step2: If the result is `miss`
+     * <p>
+     * - If player 2 is stuck in the tar pit, update state to {@link #PLAYERONE_DICE}.
+     * <p>
+     * - Otherwise, the state is updated to {@link #PLAYERTWO_DICE}.
+     */
     public void playerOneDir(){
         if(state == PLAYERONE_DICE){
             dirDiceOne.roll();
@@ -288,7 +348,10 @@ public class Game {
         }
     }
 
-
+    /**
+     * Player 1 gets the "ideal" number of squares moved as determined by dice
+     * @return true - it is time to move player 1
+     */
     public boolean playerOneMoveFirstly(){
         if(state == PLAYERONE_MOVE){
             moveDiceOne.roll();
@@ -297,6 +360,9 @@ public class Game {
         return false;
     }
 
+    /**
+     * Update state after executing {@link #move(Gamer, DirDice, MoveDice)} method.
+     */
     public void playerOneMoveSecondly(){
         if(state == SOMEONE_WON){
             doPersistentRecord(gamer1);
@@ -317,6 +383,18 @@ public class Game {
             }
         }
     }
+
+    /**
+     * Player 2 throws a die to obtain the direction of movement.
+     * <p>
+     * Step1: Player 2 throws the dice. If the result is not `miss`, the state is updated to {@link #PLAYERTWO_MOVE}.
+     * <p>
+     * Step2: If the result is `miss`
+     * <p>
+     * - If player 1 is stuck in the tar pit, update state to {@link #PLAYERTWO_DICE}.
+     * <p>
+     * - Otherwise, the state is updated to {@link #PLAYERONE_DICE}.
+     */
     public void playerTwoDir(){
         if(state == PLAYERTWO_DICE){
             dirDiceTwo.roll();
@@ -339,6 +417,11 @@ public class Game {
             }
         }
     }
+
+    /**
+     * Player 2 gets the "ideal" number of squares moved as determined by dice
+     * @return true - it is time to move player 2
+     */
     public boolean playerTwoMoveFirstly(){
         if(state == PLAYERTWO_MOVE){
             moveDiceTwo.roll();
@@ -346,6 +429,10 @@ public class Game {
         }
         return false;
     }
+
+    /**
+     * Update state after executing {@link #move(Gamer, DirDice, MoveDice)} method.
+     */
     public void playerTwoMoveSecondly(){
         if(state == SOMEONE_WON){
             doPersistentRecord(gamer2);
@@ -381,6 +468,24 @@ public class Game {
         }
     }
 
+    /**
+     * Put the new winner's record into the total record.
+     * <p>
+     * Step1: get name and moves of winner
+     * <p>
+     * Step2: set name and moves into {@link #winner} object
+     * <p>
+     * Step3:
+     * <p>
+     * - If there is no previous winners, just put this new winner in to ArrayList of {@link #previousGamers}
+     * <p>
+     * - If there are some previous winners, execute {@link Gamers#mergeNewRecord(Gamer)} and {@link Gamers#sortAllRecords()} methods
+     * <p>
+     * Step4: execute {@link #doClearRecord()} method
+     * <p>
+     * Step5: put the total records into a file and store this file locally.
+     * @param player The winner of this round of game (Enter two names to start a new game is a new round)
+     */
     public void doPersistentRecord(Gamer player){
         String name = player.equals(gamer1) ? gamer1.name : gamer2.name;
         int moves = player.equals(gamer1) ? gamer1.moves : gamer2.moves;
@@ -410,6 +515,10 @@ public class Game {
         }
     }
 
+    /**
+     * get records of all previous winners
+     * @return Records all previous winners
+     */
     public Gamers getPreviousGamers(){
         Gamers tempGames = null;
         try{
@@ -422,8 +531,5 @@ public class Game {
         }
         return tempGames;
     }
-
-//  move函数应该由controller调用， 在测试里，应该像controller类一样，写一个for(int i = 0; i < game.moveDiceOne.move; i++)的循环，
-    //for循环内部跟controller类一样写，for循环结束对剩余步数的判断也要跟controller一样写
 
 }

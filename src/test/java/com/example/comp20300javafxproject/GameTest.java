@@ -470,6 +470,7 @@ class GameTest {
     @DisplayName("player 1 wins")
     void test21(){
         Game game = new Game();
+        game.doClearRecord(); // 需要吧？
         game.gamer1.setName("Riki");
         game.gamer1.layoutX = 100;
         game.gamer1.layoutY = 150;
@@ -496,12 +497,85 @@ class GameTest {
         assertEquals(1, game.winner.numWins);
     }
 
+    @Test
+    @DisplayName("Persistent Record")
+    void test22(){
+        Game game = new Game();
+        game.previousGamers = game.getPreviousGamers();
+        assertEquals("Riki", game.previousGamers.allWinners.get(0).name);
+        assertEquals(2, game.previousGamers.allWinners.get(0).moves);
+        assertEquals(1, game.previousGamers.allWinners.get(0).numWins);
+    }
+
+    @Test
+    @DisplayName("Clear the record")
+    void test23(){
+        Game game = new Game();
+        game.previousGamers = game.getPreviousGamers();
+        assertEquals("Riki", game.previousGamers.allWinners.get(0).name);
+        assertEquals(2, game.previousGamers.allWinners.get(0).moves);
+        assertEquals(1, game.previousGamers.allWinners.get(0).numWins);
+
+        game.doClearRecord();
+        game.previousGamers = game.getPreviousGamers();
+        assertNull(game.previousGamers);
+    }
+
+    @Test
+    @DisplayName("New winners are recorded persistently")
+    void test24(){
+        Game game = new Game();
+        game.doClearRecord();
+
+        game.gamer2.setName("Julie");
+        game.gamer2.setMoves(19);
+        game.gamer2.setNumWins(1);
+        game.doPersistentRecord(game.gamer2);
+
+        game.winner = new Gamer();
+        game.gamer1.setName("Bary");
+        game.gamer1.setMoves(20);
+        game.gamer1.setNumWins(1);
+        game.doPersistentRecord(game.gamer1);
+
+        game.winner = new Gamer();
+        game.gamer1.setName("August");
+        game.gamer1.setMoves(17);
+        game.gamer1.setNumWins(1);
+        game.doPersistentRecord(game.gamer1);
+
+        game.winner = new Gamer();
+        game.gamer1.setName("Julie");
+        game.gamer1.setMoves(25);
+        game.gamer1.setNumWins(1);
+        game.doPersistentRecord(game.gamer1);
+
+        game.winner = new Gamer();
+        game.gamer2.setName("Bary");
+        game.gamer2.setMoves(25);
+        game.gamer2.setNumWins(1);
+        game.doPersistentRecord(game.gamer2);
+
+        game.winner = new Gamer();
+        game.gamer1.setName("Bary");
+        game.gamer1.setMoves(22);
+        game.gamer1.setNumWins(1);
+        game.doPersistentRecord(game.gamer1);
+
+        assertEquals("Bary", game.previousGamers.allWinners.get(0).name);
+        assertEquals(3, game.previousGamers.allWinners.get(0).numWins);
+        assertEquals("20 | 25 | 22", game.previousGamers.allWinners.get(0).allMoves);
+
+        assertEquals("Julie", game.previousGamers.allWinners.get(1).name);
+        assertEquals(2, game.previousGamers.allWinners.get(1).numWins);
+        assertEquals("19 | 25", game.previousGamers.allWinners.get(1).allMoves);
+
+        assertEquals("August", game.previousGamers.allWinners.get(2).name);
+        assertEquals(1, game.previousGamers.allWinners.get(2).numWins);
+        assertEquals("17", game.previousGamers.allWinners.get(2).allMoves);
+    }
+
     // double stuck ?
     // 左移/右移时遇到障碍？
-    // someone wins
-    // doPersistentRecord
-    // getPreviousGamers
-    // doClearRecord
-    // new winners (2+ records) ?
 
 }

@@ -27,91 +27,7 @@ import static com.example.comp20300javafxproject.Game.SOMEONE_WON;
  * The Controller of JavaFx Project
  */
 public class ArchitectureController {
-//    /**
-//     * An unready state means that the previous game has just ended or the game has not yet started.
-//     */
-//    static final int NOT_READY = 0;
-//    /**
-//     * This state means that player one should throw the dice to decide the direction of movement at this time
-//     */
-//    static final int PLAYERONE_DICE = 1;
-//    /**
-//     * This state means that player one should throw the dice to determine the number of squares to move at this time
-//     */
-//    static final int PLAYERONE_MOVE = 2;
-//    /**
-//     * This state means that at this time the player one is blocked by other obstacles
-//     * and should choose to move left/move right/skip the turn.
-//     * <p>
-//     * Obstacles include: other players, board edges, fire, tar pits, fences
-//     */
-//    static final int PLAYERONE_CHOOSING = 3;
-//    /**
-//     * This state means that player two should throw the dice to decide the direction of movement at this time
-//     */
-//    static final int PLAYERTWO_DICE = 4;
-//    /**
-//     * This state means that player two should throw the dice to determine the number of squares to move at this time
-//     */
-//    static final int PLAYERTWO_MOVE = 5;
-//    /**
-//     * This state means that at this time the player two is blocked by other obstacles
-//     * and should choose to move left/move right/skip the turn.
-//     * <p>
-//     * Obstacles include: other players, board edges, fire, tar pits, fences
-//     */
-//    static final int PLAYERTWO_CHOOSING = 6;
-//    /**
-//     * This status means that one of players has won
-//     */
-//    static final int SOMEONE_WON = 7;
-//    /**
-//     * Game state
-//     */
-//    private int state = NOT_READY;
-//    /**
-//     * True represents player one being stuck in the tar pit. Player one will miss the next turn.
-//     */
-//    private boolean playerOneStuck = false;
-//    /**
-//     * True represents player two being stuck in the tar pit. Player two will miss the next turn.
-//     */
-//    private boolean playerTwoStuck = false;
-
-//    /**
-//     * A dice that determines the direction of player one's movement
-//     */
-//    private DirDice dirDiceOne;
-//    /**
-//     * A dice that determines the direction of player two's movement
-//     */
-//    private DirDice dirDiceTwo;
-//    /**
-//     * A dice that determines the number of squares moved by player one
-//     */
-//    private MoveDice moveDiceOne;
-//    /**
-//     * A dice that determines the number of squares moved by player two
-//     */
-//    private MoveDice moveDiceTwo;
-
     private Game game;
-//    /**
-//     * Number of squares moved by player one
-//     */
-//    private int playerOneMoves;
-//    /**
-//     * Number of squares moved by player two
-//     */
-//    private int playerTwoMoves;
-//    /**
-//     * The winner of this round of game (Enter two names to start a new game is a new round)
-//     */
-//    private Gamer winner;
-//    /**
-//     * Records all previous winners and new winners. It persistently records the previous results even though the game program restarted.
-//     */
-//    private Gamers previousGamers;
 
     /**
      * The circle representing player one
@@ -398,19 +314,10 @@ public class ArchitectureController {
 
 
     /**
-     * Initialize four dices,
-     * set two players' moves to 0,
-     * initialize the ({@link #winner}),
-     * initialize the 3 ArrayList that stores the 30 Labels of the scoreboard
+     * initialize the 3 ArrayList that stores the 30 Labels of the scoreboard,
+     * initialize the game
      */
     public ArchitectureController(){
-//        this.dirDiceOne = new DirDice();
-//        this.dirDiceTwo = new DirDice();
-//        this.moveDiceOne = new MoveDice();
-//        this.moveDiceTwo = new MoveDice();
-//        this.playerOneMoves = 0;
-//        this.playerTwoMoves = 0;
-//        this.winner = new Gamer();
         this.tenApexGamersName = new ArrayList<>();
         this.tenApexGamersWins = new ArrayList<>();
         this.tenApexGamersMoves = new ArrayList<>();
@@ -489,9 +396,7 @@ public class ArchitectureController {
      * Initialize the text of the two name input boxes
      * and other game information (direction of movement, number of squares to move, etc.).
      * <p>
-     * Initialize the winner ({@link #winner})
-     * <p>
-     * Initialize {@link #state} to the very beginning of the game - {@link #NOT_READY}
+     * Initialize {@link Game#state} to the very beginning of the game - {@link Game#NOT_READY}
      */
     public void initAfterFinish(){
         playerOneNameInput.clear();
@@ -533,216 +438,17 @@ public class ArchitectureController {
         }
     }
 
-//    /**
-//     * Determine if this square is fire
-//     * <p>
-//     * Fire is a common obstacle, the player can not enter the fire, need to go around the way forward.
-//     * @param layoutX Player's x coordinate
-//     * @param layoutY Player's y coordinate
-//     * @return true - fire, false - not fire
-//     */
-//    public boolean isFire(double layoutX, double layoutY){
-//        if(layoutX > 0 && layoutX < 200 && layoutY > 425 && layoutY < 500)
-//            return true;
-//        else return layoutX > 600 && layoutX < 800 && layoutY > 350 && layoutY < 425;
-//    }
-//
-//    /**
-//     * Determine if this square is tar pit
-//     * <p>
-//     * Tar pits are accessible obstacles. If a player passes through a tar pit, he or she will be stuck.
-//     * This player will skip the next turn.
-//     * @param layoutX Player's x coordinate
-//     * @param layoutY Player's y coordinate
-//     * @return true - tar pit, false - not tar pit
-//     */
-//    public boolean isTarPit(double layoutX, double layoutY){
-//        if(layoutX > 0 && layoutX < 200 && layoutY > 200 && layoutY < 275)
-//            return true;
-//        else return layoutX > 400 && layoutX < 600 && layoutY > 275 && layoutY < 350;
-//    }
-//
-//    /**
-//     * Determine if this square is fence
-//     * <p>
-//     * A fence is an obstacle that covers two square spaces, the player can not enter the fence,
-//     * need to go around the way forward.
-//     * @param layoutX Player's x coordinate
-//     * @param layoutY Player's y coordinate
-//     * @return true - fence, false - not fence
-//     */
-//    public boolean isFence(double layoutX, double layoutY){
-//        return layoutX > 200 && layoutX < 600 && layoutY > 50 && layoutY < 125;
-//    }
-//
-//    /**
-//     * Detect if there is another player in this square
-//     * @param player another player (not the moving player)
-//     * @param layoutX x-coordinate of the moving player
-//     * @param layoutY y-coordinate of the moving player
-//     * @return true - Another player in this square, false - not
-//     */
-//    public boolean isOtherPlayer(Circle player, double layoutX, double layoutY){
-//        return layoutX == player.getLayoutX() && layoutY == player.getLayoutY();
-//    }
-//
-//    /**
-//     * Detect if the player is now outside of board
-//     * @param layoutX Player's x coordinate
-//     * @param layoutY Player's y coordinate
-//     * @return true - outside, false - not outside
-//     */
-//    public boolean isEdge(double layoutX, double layoutY){
-//        return layoutX < 0 || layoutX > 800 || layoutY < 0 || layoutY > 700;
-//    }
-//
-//    /**
-//     * Detect if the player is now in the winning area
-//     * @param layoutX Player's x coordinate
-//     * @param layoutY Player's y coordinate
-//     * @return true - in the winner area, false - not
-//     */
-//    public boolean isFinishArea(double layoutX, double layoutY){
-//        return layoutX > 0 && layoutX < 800 && layoutY > 0 && layoutY < 50;
-//    }
-
-//    /**
-//     * The core logical method to forward or backward movement
-//     * <p>
-//     * Step1: The player gets the "ideal" number of squares moved as determined by dice, execute this method
-//     * <p>
-//     * Step2: Each step must be judged whether this square is obstacle.
-//     * <p>
-//     * - If it is another player/fire/fence/edge of the board, player will stop, ending the method and the remaining moves will be stored.
-//     * If this one is player 1 / 2, state will be updated to {@link #PLAYERONE_CHOOSING} / {@link #PLAYERTWO_CHOOSING}.
-//     * Player 1 or Player 2 should choose to move left/move right/skip the turn.
-//     * <p>
-//     * - If it's a tar pit, the player will get stuck in it and skip the next turn. End method.
-//     * If this one is player 1 / 2 who is stuck, state will be updated to {@link #PLAYERTWO_DICE} / {@link #PLAYERONE_DICE}.
-//     * <p>
-//     * - If everything is fine, then the player will move
-//     * <p>
-//     * Step3: If the player consumes all the "ideal" moves, state will update to {@link #PLAYERONE_DICE} / {@link #PLAYERTWO_DICE},
-//     * at which time player1/2 should roll the dice.
-//     * @param player the moving player
-//     * @param dirDice The moving player's dice that determine the direction of movement
-//     * @param moveDice The moving player's dice that determine the number of squares moved
-//     */
-//    public void move(Circle player, DirDice dirDice, MoveDice moveDice){
-//        //这个函数应该在重构完被去掉，只会调用game类的move
-//
-//
-//        int pixelDistance = -75;
-//        if(dirDice.dir == Direction.forward) ;
-//        else if(dirDice.dir == Direction.backward)
-//            pixelDistance = 75;
-//
-//        int i;
-//        for(i = 0; i < moveDice.move; i++){
-//            if(isFire(player.getLayoutX(), player.getLayoutY() + pixelDistance) ||
-//                    isFence(player.getLayoutX(), player.getLayoutY() + pixelDistance) ||
-//                    isOtherPlayer(player.equals(playerOne) ? playerTwo: playerOne,
-//                            player.getLayoutX(), player.getLayoutY() + pixelDistance) ||
-//                    isEdge(player.getLayoutX(), player.getLayoutY() + pixelDistance)){
-//                state = player.equals(playerOne) ? PLAYERONE_CHOOSING : PLAYERTWO_CHOOSING;
-//                break;
-//            }
-//            else if(isTarPit(player.getLayoutX(), player.getLayoutY() + pixelDistance)){
-//                player.setLayoutY(player.getLayoutY() + pixelDistance);
-//                if(player.equals(playerOne)){
-//                    playerOneStuck = true;
-//                    playerOneDirInfo.setText(playerOneNameText.getText() + " was stuck");
-//                    playerOneMoveInfo.setText("do not move");
-//                    updatePlayerMoves(playerOne);
-//                }
-//                else{
-//                    playerTwoStuck = true;
-//                    playerTwoDirInfo.setText(playerTwoNameText.getText() + " was stuck");
-//                    playerTwoMoveInfo.setText("do not move");
-//                    updatePlayerMoves(playerTwo);
-//                }
-//                state = player.equals(playerOne) ? PLAYERTWO_DICE: PLAYERONE_DICE;
-//                break;
-//            }
-//            else {
-//                player.setLayoutY(player.getLayoutY() + pixelDistance);
-//                if(player.equals(playerOne))
-//                    updatePlayerMoves(playerOne);
-//                else
-//                    updatePlayerMoves(playerTwo);
-//                if(player.getLayoutY() == 0)
-//                    player.setLayoutY(player.getLayoutY() + 25);
-//                if(isFinishArea(player.getLayoutX(), player.getLayoutY())){
-//                    //Finished!
-//                    String winner = player.equals(playerOne) ? playerOneNameText.getText() : playerTwoNameText.getText();
-//                    winnerText.setText(winner + " win!");
-//                    state = SOMEONE_WON;
-//                    break;
-//                }
-//            }
-//        }
-//        if(i == moveDice.move){
-//            if(player.equals(playerOne)){
-//                state = PLAYERTWO_DICE;
-//                setPlayerTurn(playerTwo);
-//            }
-//            else {
-//                state = PLAYERONE_DICE;
-//                setPlayerTurn(playerOne);
-//            }
-//        }
-//        else
-//            moveDice.move -= i;
-//    }
-//
-//    /**
-//     * The core logic method when a player encounters an obstacle (other player/edge of the board/fire/fence)
-//     * <p>
-//     * This method is executed when the "left" or "right" button is clicked
-//     * and the state is {@link #PLAYERONE_CHOOSING} or {@link #PLAYERTWO_CHOOSING}.
-//     * <p>
-//     * Each step must be judged whether this square is obstacle.
-//     * The player will stop in front of any obstacle (including tar pits).
-//     * <p>
-//     * Whether the player consumes all the "ideal" moves or stops in front of an obstacle, end the method.
-//     * And update the state to {@link #PLAYERONE_DICE} or {@link #PLAYERONE_DICE}.
-//     * @param player the moving player
-//     * @param dirDice The moving player's dice that determine the direction of movement
-//     * @param moveDice The moving player's dice that determine the number of squares moved
-//     * @param leftOrRight -1 is for left, 1 is for right. Because the x coordinate decreases when moving to the left
-//     */
-//    public void moveLeftOrRight(Circle player, DirDice dirDice, MoveDice moveDice, int leftOrRight){
-//        int pixelDistance = 200 * leftOrRight;
-//        for(int i = 0; i < moveDice.move; i++){
-//            if(isFire(player.getLayoutX() + pixelDistance, player.getLayoutY()) ||
-//                    isTarPit(player.getLayoutX() + pixelDistance, player.getLayoutY()) ||
-//                    isFence(player.getLayoutX() + pixelDistance, player.getLayoutY()) ||
-//                    isOtherPlayer(player.equals(playerOne) ? playerTwo: playerOne,
-//                            player.getLayoutX() + pixelDistance, player.getLayoutY()) ||
-//                    isEdge(player.getLayoutX() + pixelDistance, player.getLayoutY())){
-//                break;
-//            }
-//            else {
-//                player.setLayoutX(player.getLayoutX() + pixelDistance);
-//                if(player.equals(playerOne))
-//                    updatePlayerMoves(playerOne);
-//                else
-//                    updatePlayerMoves(playerTwo);
-//            }
-//        }
-//        state = player.equals(playerOne) ? PLAYERTWO_DICE: PLAYERONE_DICE;
-//    }
 
     /**
      * Player 1 throws a die to obtain the direction of movement.
      * <p>
-     * Step1: Player 1 throws the dice. If the result is not `miss`, the state is updated to {@link #PLAYERONE_MOVE}.
+     * Step1: Player 1 throws the dice. If the result is not `miss`, the state is updated to {@link Game#PLAYERONE_MOVE}.
      * <p>
      * Step2: If the result is `miss`
      * <p>
-     * - If player 2 is stuck in the tar pit, update state to {@link #PLAYERONE_DICE}.
+     * - If player 2 is stuck in the tar pit, update state to {@link Game#PLAYERONE_DICE}.
      * <p>
-     * - Otherwise, the state is updated to {@link #PLAYERTWO_DICE}.
+     * - Otherwise, the state is updated to {@link Game#PLAYERTWO_DICE}.
      * @param event Hit the "Direction" button of player 1
      */
     @FXML
@@ -763,21 +469,22 @@ public class ArchitectureController {
     }
 
     /**
-     * This method is executed if the "Move" button of player 1 is hit and the state is {@link #PLAYERONE_MOVE}.
+     * This method is executed if the "Move" button of player 1 is hit and the state is {@link Game#PLAYERONE_MOVE}.
      * <p>
      * Step1: Player 1 gets the "ideal" number of squares moved as determined by dice,
-     * execute {@link #move(Circle, DirDice, MoveDice)} method.
+     * execute {@link Game#move(Gamer, DirDice, MoveDice)} method.
      * <p>
      * Step2: check current state
      * <p>
-     * - {@link #SOMEONE_WON}: execute {@link #doPersistentRecord(Circle)} method, Circle param is PlayerOne.
+     * - {@link Game#SOMEONE_WON}: will execute {@link Game#doPersistentRecord(Gamer)} method in {@link Game#playerOneMoveSecondly()},
+     * Gamer param is PlayerOne.
      * execute {@link #showNewWholeRecords()} method. execute {@link #initAfterFinish()} method.
-     * Set the state to {@link #NOT_READY}
+     * Set the state to {@link Game#NOT_READY}
      * <p>
-     * - {@link #PLAYERONE_CHOOSING}: update some info and wait for the "Left"/"Right"/"Miss" button to be hit
+     * - {@link Game#PLAYERONE_CHOOSING}: update some info and wait for the "Left"/"Right"/"Miss" button to be hit
      * <p>
-     * - else: If player 1 was stuck in tar pit, update state to {@link #PLAYERTWO_DICE}.
-     * If player 2 was stuck in tar pit, update state to {@link #PLAYERONE_DICE}.
+     * - else: If player 1 was stuck in tar pit, update state to {@link Game#PLAYERTWO_DICE}.
+     * If player 2 was stuck in tar pit, update state to {@link Game#PLAYERONE_DICE}.
      * @param event Hit the "Move" button of player 1
      */
     @FXML
@@ -840,12 +547,12 @@ public class ArchitectureController {
     }
 
     /**
-     * This method is executed if the "Left" button of player 1 is hit and the state is {@link #PLAYERONE_CHOOSING}.
+     * This method is executed if the "Left" button of player 1 is hit and the state is {@link Game#PLAYERONE_CHOOSING}.
      * <p>
-     * Step1: execute {@link #moveLeftOrRight(Circle, DirDice, MoveDice, int)} method, Circle param is PlayerOne.
+     * Step1: execute {@link Game#moveLeftOrRight(Gamer, DirDice, MoveDice, int)} method, Gamer param is PlayerOne.
      * <p>
-     * Step2: If player 1 was stuck in tar pit, update state to {@link #PLAYERTWO_DICE}.
-     * If player 2 was stuck in tar pit, update state to {@link #PLAYERONE_DICE}.
+     * Step2: If player 1 was stuck in tar pit, update state to {@link Game#PLAYERTWO_DICE}.
+     * If player 2 was stuck in tar pit, update state to {@link Game#PLAYERONE_DICE}.
      * @param event Hit the "Left" button of player 1
      */
     @FXML
@@ -876,12 +583,12 @@ public class ArchitectureController {
     }
 
     /**
-     * This method is executed if the "Miss" button of player 1 is hit and the state is {@link #PLAYERONE_CHOOSING}.
+     * This method is executed if the "Miss" button of player 1 is hit and the state is {@link Game#PLAYERONE_CHOOSING}.
      * <p>
-     * Step1: update state to {@link #PLAYERTWO_DICE}
+     * Step1: update state to {@link Game#PLAYERTWO_DICE}
      * <p>
-     * Step2: If player 1 was stuck in tar pit, update state to {@link #PLAYERTWO_DICE}.
-     * If player 2 was stuck in tar pit, update state to {@link #PLAYERONE_DICE}.
+     * Step2: If player 1 was stuck in tar pit, update state to {@link Game#PLAYERTWO_DICE}.
+     * If player 2 was stuck in tar pit, update state to {@link Game#PLAYERONE_DICE}.
      * @param event Hit the "Miss" button of player 1
      */
     @FXML
@@ -902,12 +609,12 @@ public class ArchitectureController {
     }
 
     /**
-     * This method is executed if the "Right" button of player 1 is hit and the state is {@link #PLAYERONE_CHOOSING}.
+     * This method is executed if the "Right" button of player 1 is hit and the state is {@link Game#PLAYERONE_CHOOSING}.
      * <p>
-     * Step1: execute {@link #moveLeftOrRight(Circle, DirDice, MoveDice, int)} method, Circle param is PlayerOne.
+     * Step1: execute {@link Game#moveLeftOrRight(Gamer, DirDice, MoveDice, int)} method, Gamer param is PlayerOne.
      * <p>
-     * Step2: If player 1 was stuck in tar pit, update state to {@link #PLAYERTWO_DICE}.
-     * If player 2 was stuck in tar pit, update state to {@link #PLAYERONE_DICE}.
+     * Step2: If player 1 was stuck in tar pit, update state to {@link Game#PLAYERTWO_DICE}.
+     * If player 2 was stuck in tar pit, update state to {@link Game#PLAYERONE_DICE}.
      * @param event Hit the "Right" Button of player 1
      */
     @FXML
@@ -940,13 +647,13 @@ public class ArchitectureController {
     /**
      * Player 2 throws a die to obtain the direction of movement.
      * <p>
-     * Step1: Player 2 throws the dice. If the result is not `miss`, the state is updated to {@link #PLAYERTWO_MOVE}.
+     * Step1: Player 2 throws the dice. If the result is not `miss`, the state is updated to {@link Game#PLAYERTWO_MOVE}.
      * <p>
      * Step2: If the result is `miss`
      * <p>
-     * - If player 1 is stuck in the tar pit, update state to {@link #PLAYERTWO_DICE}.
+     * - If player 1 is stuck in the tar pit, update state to {@link Game#PLAYERTWO_DICE}.
      * <p>
-     * - Otherwise, the state is updated to {@link #PLAYERONE_DICE}.
+     * - Otherwise, the state is updated to {@link Game#PLAYERONE_DICE}.
      * @param event Hit the "Direction" Button of player 2
      */
     @FXML
@@ -967,21 +674,22 @@ public class ArchitectureController {
     }
 
     /**
-     * This method is executed if the "Move" button of player 2 is hit and the state is {@link #PLAYERTWO_MOVE}.
+     * This method is executed if the "Move" button of player 2 is hit and the state is {@link Game#PLAYERTWO_MOVE}.
      * <p>
-     * Step1: Player 1 gets the "ideal" number of squares moved as determined by dice,
-     * execute {@link #move(Circle, DirDice, MoveDice)} method.
+     * Step1: Player 2 gets the "ideal" number of squares moved as determined by dice,
+     * execute {@link Game#move(Gamer, DirDice, MoveDice)} method.
      * <p>
      * Step2: check current state
      * <p>
-     * - {@link #SOMEONE_WON}: execute {@link #doPersistentRecord(Circle)} method, Circle param is PlayerTwo.
+     * - {@link Game#SOMEONE_WON}: execute {@link Game#doPersistentRecord(Gamer)} method in {@link Game#playerTwoMoveSecondly()},
+     * Gamer param is PlayerTwo.
      * execute {@link #showNewWholeRecords()} method. execute {@link #initAfterFinish()} method.
-     * Set the state to {@link #NOT_READY}
+     * Set the state to {@link Game#NOT_READY}
      * <p>
-     * - {@link #PLAYERONE_CHOOSING}: update some info and wait for the "Left"/"Right"/"Miss" button to be hit
+     * - {@link Game#PLAYERONE_CHOOSING}: update some info and wait for the "Left"/"Right"/"Miss" button to be hit
      * <p>
-     * - else: If player 1 was stuck in tar pit, update state to {@link #PLAYERTWO_DICE}.
-     * If player 2 was stuck in tar pit, update state to {@link #PLAYERONE_DICE}.
+     * - else: If player 1 was stuck in tar pit, update state to {@link Game#PLAYERTWO_DICE}.
+     * If player 2 was stuck in tar pit, update state to {@link Game#PLAYERONE_DICE}.
      * @param event Hit the "Move" Button of player 2
      */
     @FXML
@@ -1044,12 +752,12 @@ public class ArchitectureController {
     }
 
     /**
-     * This method is executed if the "Left" button of player 2 is hit and the state is {@link #PLAYERTWO_CHOOSING}.
+     * This method is executed if the "Left" button of player 2 is hit and the state is {@link Game#PLAYERTWO_CHOOSING}.
      * <p>
-     * Step1: execute {@link #moveLeftOrRight(Circle, DirDice, MoveDice, int)} method, Circle param is PlayerTwo.
+     * Step1: execute {@link Game#moveLeftOrRight(Gamer, DirDice, MoveDice, int)} method, Gamer param is PlayerTwo.
      * <p>
-     * Step2: If player 1 was stuck in tar pit, update state to {@link #PLAYERTWO_DICE}.
-     * If player 2 was stuck in tar pit, update state to {@link #PLAYERONE_DICE}.
+     * Step2: If player 1 was stuck in tar pit, update state to {@link Game#PLAYERTWO_DICE}.
+     * If player 2 was stuck in tar pit, update state to {@link Game#PLAYERONE_DICE}.
      * @param event Hit the "Left" button of player 2
      */
     @FXML
@@ -1080,12 +788,12 @@ public class ArchitectureController {
     }
 
     /**
-     * This method is executed if the "Miss" button of player 2 is hit and the state is {@link #PLAYERTWO_CHOOSING}.
+     * This method is executed if the "Miss" button of player 2 is hit and the state is {@link Game#PLAYERTWO_CHOOSING}.
      * <p>
-     * Step1: update state to {@link #PLAYERONE_DICE}
+     * Step1: update state to {@link Game#PLAYERONE_DICE}
      * <p>
-     * Step2: If player 1 was stuck in tar pit, update state to {@link #PLAYERTWO_DICE}.
-     * If player 2 was stuck in tar pit, update state to {@link #PLAYERONE_DICE}.
+     * Step2: If player 1 was stuck in tar pit, update state to {@link Game#PLAYERTWO_DICE}.
+     * If player 2 was stuck in tar pit, update state to {@link Game#PLAYERONE_DICE}.
      * @param event Hit the "Miss" button of player 2
      */
     @FXML
@@ -1106,12 +814,12 @@ public class ArchitectureController {
     }
 
     /**
-     * This method is executed if the "Right" button of player 2 is hit and the state is {@link #PLAYERTWO_CHOOSING}.
+     * This method is executed if the "Right" button of player 2 is hit and the state is {@link Game#PLAYERTWO_CHOOSING}.
      * <p>
-     * Step1: execute {@link #moveLeftOrRight(Circle, DirDice, MoveDice, int)} method, Circle param is PlayerTwo.
+     * Step1: execute {@link Game#moveLeftOrRight(Gamer, DirDice, MoveDice, int)} method, Gamer param is PlayerTwo.
      * <p>
-     * Step2: If player 1 was stuck in tar pit, update state to {@link #PLAYERTWO_DICE}.
-     * If player 2 was stuck in tar pit, update state to {@link #PLAYERONE_DICE}.
+     * Step2: If player 1 was stuck in tar pit, update state to {@link Game#PLAYERTWO_DICE}.
+     * If player 2 was stuck in tar pit, update state to {@link Game#PLAYERONE_DICE}.
      * @param event Hit the "Right" Button of player 2
      */
     @FXML
@@ -1187,8 +895,8 @@ public class ArchitectureController {
     /**
      * This method is executed if the "Show Record" button is hit and {@link #showedPreviousRecord} is false.
      * <p>
-     * execute {@link #getPreviousGamers()} method,
-     * show the previous game records stored in ArrayList of {@link #previousGamers}
+     * execute {@link Game#getPreviousGamers()} method,
+     * show the previous game records stored in ArrayList of {@link Game#previousGamers}
      */
     @FXML
     public void showPreviousRecord(){
@@ -1220,7 +928,7 @@ public class ArchitectureController {
     /**
      * This method will be executed after a player wins.
      * <p>
-     * Show the updated game records stored in ArrayList of {@link #previousGamers}
+     * Show the updated game records stored in ArrayList of {@link Game#previousGamers}
      */
     public void showNewWholeRecords(){
         for(int i = 0; i < game.previousGamers.allWinners.size() && i < 10; i++){
@@ -1230,88 +938,10 @@ public class ArchitectureController {
         }
     }
 
-//    /**
-//     * Clear the history of game score board
-//     */
-//    public void doClearRecord(){
-//        try {
-//            PrintWriter writer =
-//                    new PrintWriter("Record.ser");
-//            writer.print("");
-//            writer.close();
-//        }catch (FileNotFoundException ex){
-//            System.out.println("File not found");
-//        }
-//    }
-
-//    /**
-//     * Put the new winner's record into the total record.
-//     * <p>
-//     * Step1: get name and moves of winner
-//     * <p>
-//     * Step2: set name and moves into {@link #winner} object
-//     * <p>
-//     * Step3:
-//     * <p>
-//     * - If there is no previous winners, just put this new winner in to ArrayList of {@link #previousGamers}
-//     * <p>
-//     * - If there are some previous winners, execute {@link Gamers#mergeNewRecord(Gamer)} and {@link Gamers#sortAllRecords()} methods
-//     * <p>
-//     * Step4: execute {@link #doClearRecord()} method
-//     * <p>
-//     * Step5: put the total records into a file and store this file locally.
-//     * @param player The winner of this round of game (Enter two names to start a new game is a new round)
-//     */
-//    public void doPersistentRecord(Circle player){ //此函数原版未写在注释里，可查阅原版project
-//        String name = player.equals(playerOne) ? playerOneNameText.getText() : playerTwoNameText.getText();
-//        int moves = player.equals(playerOne) ? this.game.gamer1.moves : this.game.gamer2.moves;
-//        winner.setName(name);
-//        winner.setNumWins(1);
-//        winner.setMoves(moves);
-//        winner.setAllMoves();
-//        if(this.previousGamers == null){
-//            this.previousGamers = new Gamers();
-//            this.previousGamers.allWinners.add(winner);
-//        }
-//        else {
-//            this.previousGamers.mergeNewRecord(winner);
-//            this.previousGamers.sortAllRecords();
-//        }
-//
-//        doClearRecord();
-//        try {
-//            FileOutputStream fileOutputStream =
-//                    new FileOutputStream("Record.ser");
-//            ObjectOutputStream out = new ObjectOutputStream(fileOutputStream);
-//            out.writeObject(this.previousGamers);
-//            out.close();
-//            fileOutputStream.close();
-//        }catch (IOException ex){
-//
-//        }
-//    }
-
-//    /**
-//     * get records of all previous winners
-//     * @return Records all previous winners
-//     */
-//    public Gamers getPreviousGamers(){
-//        Gamers tempGames = null;
-//        try{
-//            ObjectInputStream in =
-//                    new ObjectInputStream(new FileInputStream("Record.ser"));
-//            tempGames = (Gamers) in.readObject();
-//            in.close();
-//        }catch (Exception ex){
-//
-//        }
-//        return tempGames;
-//    }
-
     /**
      * Clear the history of game score board and reset the info of game score board
      * <p>
-     * Step1: execute {@link #doClearRecord()} method
+     * Step1: execute {@link Game#doClearRecord()} method
      * <p>
      * Step2: reset the info of game score board
      * @param event Hit the "Clear Record" Button
@@ -1332,5 +962,4 @@ public class ArchitectureController {
             this.tenApexGamersMoves.get(i).setText("<>");
         }
     }
-
 }

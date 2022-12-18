@@ -46,6 +46,9 @@ public class Gamer implements Serializable, Comparable<Gamer> {
         this.allMoves = Integer.toString(this.moves);
     }
 
+    /**
+     * increase the moves
+     */
     public void increaseMoves(){
         this.moves++;
     }
