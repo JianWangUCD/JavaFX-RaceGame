@@ -220,10 +220,8 @@ public class Game {
                         player.layoutX, player.layoutY + pixelDistance) ||
                 isEdge(player.layoutX, player.layoutY + pixelDistance)){
             state = player.equals(gamer1) ? PLAYERONE_CHOOSING : PLAYERTWO_CHOOSING;
-            //moveDice.move -= 1; 删掉？ 非原版代码
         }
         else if(isTarPit(player.layoutX, player.layoutY + pixelDistance)){
-            //player.setLayoutY(player.getLayoutY() + pixelDistance);
             player.layoutY += pixelDistance;
 
             if(player.equals(gamer1)){

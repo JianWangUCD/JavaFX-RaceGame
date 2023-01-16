@@ -490,7 +490,7 @@ public class ArchitectureController {
         playerOneMoveInfo.setText("Number of squares to move: " + game.moveDiceOne.move);
 
         int i;
-        int idealMoves = game.moveDiceOne.move; //
+        int idealMoves = game.moveDiceOne.move;
         for(i = 0; i < idealMoves; i++){
             game.move(game.gamer1, game.dirDiceOne, game.moveDiceOne);
             if(game.state == PLAYERONE_CHOOSING)
@@ -503,7 +503,7 @@ public class ArchitectureController {
             if(game.state == SOMEONE_WON){
                 String winner = playerOneNameText.getText();
                 winnerText.setText(winner + " win!");
-                break; //
+                break;
             }
         }
         if(game.playerOneStuck){
@@ -701,7 +701,7 @@ public class ArchitectureController {
             if(game.state == SOMEONE_WON){
                 String winner = playerTwoNameText.getText();
                 winnerText.setText(winner + " win!");
-                break; //
+                break;
             }
         }
         if(game.playerTwoStuck){
