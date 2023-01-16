@@ -1,12 +1,4 @@
-# COMP20300 JavaFX Project - Simon’s Race
-
-## Student Name: 
-
-Jian Wang
-
-## Student ID: 
-
-21213011
+# JavaFX Project - Race Game
 
 ## How to run the game
 
